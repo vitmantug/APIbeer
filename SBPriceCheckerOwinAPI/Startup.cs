@@ -9,6 +9,7 @@ using System.Web.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Formatting;
 using SBPriceCheckerCore.Helpers;
+using Newtonsoft.Json.Serialization;
 
 namespace SBPriceCheckerOwinAPI
 {
@@ -50,6 +51,8 @@ namespace SBPriceCheckerOwinAPI
             //the most common approach to support JSON only is to clear other formatters and leave only JsonMediaTypeFormatter around.
             config.Formatters.Clear();
             config.Formatters.Add(new JsonMediaTypeFormatter());
+            config.Formatters.JsonFormatter.Indent = true;
+            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 
             return config;
         }

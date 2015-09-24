@@ -8,6 +8,7 @@ using System.Web.Http;
 using System.Net.Http;
 using SBPriceCheckerCore.Models;
 using SBPriceCheckerCore.Parsers;
+using System.Web.OData;
 
 namespace SBPriceCheckerOwinAPI.Controllers
 {
@@ -16,12 +17,13 @@ namespace SBPriceCheckerOwinAPI.Controllers
         // Mock a data store:
         private static List<Beer> _Db = new List<Beer>
             {
-                new Beer { Id = 1, Name = "Cerveja com Álcool", Total = 1, Capacity = 0.5, Price = 1.15, hasDiscount = false},
-                new Beer { Id = 2, Name = "Cerveja com Álcool", Total = 20, Capacity = 0.25, Price = 14.49, hasDiscount = true},
-                new Beer { Id = 3, Name = "Cerveja com Álcool Pack Económico", Total = 10, Capacity = 0.25, Price = 7.49, hasDiscount = true}
+                new Beer { id = 1, name = "Cerveja com Álcool", total = 1, capacity = 0.5, price = 1.15, hasDiscount = false},
+                new Beer { id = 2, name = "Cerveja com Álcool", total = 20, capacity = 0.25, price = 14.49, hasDiscount = true},
+                new Beer { id = 3, name = "Cerveja com Álcool Pack Económico", total = 10, capacity = 0.25, price = 7.49, hasDiscount = true}
             };
 
-        public IEnumerable<Beer> Get()
+        [EnableQueryAttribute]
+        public IQueryable<Beer> Get()
         {
             Continente parser = new Continente();
             return parser.GetBeers();

@@ -21,7 +21,7 @@ namespace SBPriceCheckerCore.Parsers
 
         private Helper Helper = new Helper();
 
-        public IEnumerable<Beer> GetBeers()
+        public IQueryable<Beer> GetBeers()
         {
             List<Beer> _DbFromContinente = new List<Beer>();
 
@@ -48,7 +48,7 @@ namespace SBPriceCheckerCore.Parsers
                             int id = 0;
                             if (int.TryParse(value, out id))
                             {
-                                beer.Id = id;
+                                beer.id = id;
                             }
                         }
                     }
@@ -59,7 +59,7 @@ namespace SBPriceCheckerCore.Parsers
                 #region parse name
 
                 string name = beerHtml.SiblingElements.Select("div.productTitle").Text;
-                beer.Name = name;
+                beer.name = name;
 
                 #endregion
 
@@ -79,18 +79,18 @@ namespace SBPriceCheckerCore.Parsers
                     {
                         case 3:
 
-                            beer.Total = 1;
+                            beer.total = 1;
 
                             capacity = totalCapacityElems.ElementAt(1);
                             unity = totalCapacityElems.ElementAt(2);
 
                             if (unity.Equals("cl"))
                             {
-                                beer.Capacity = Helper.ConvertPTNumberStrToDouble("0," + capacity);
+                                beer.capacity = Helper.ConvertPTNumberStrToDouble("0," + capacity);
                             }
                             else if (unity.Equals("lt"))
                             {
-                                beer.Capacity = Helper.ConvertPTNumberStrToDouble(capacity);
+                                beer.capacity = Helper.ConvertPTNumberStrToDouble(capacity);
                             }
 
                             break;
@@ -98,18 +98,18 @@ namespace SBPriceCheckerCore.Parsers
                         case 5:
 
                             total = totalCapacityElems.ElementAt(1);
-                            beer.Total = Convert.ToInt32(total);
+                            beer.total = Convert.ToInt32(total);
 
                             capacity = totalCapacityElems.ElementAt(3);
                             unity = totalCapacityElems.ElementAt(4);
 
                             if (unity.Equals("cl"))
                             {
-                                beer.Capacity = Helper.ConvertPTNumberStrToDouble("0," + capacity);
+                                beer.capacity = Helper.ConvertPTNumberStrToDouble("0," + capacity);
                             }
                             else if (unity.Equals("lt"))
                             {
-                                beer.Capacity = Helper.ConvertPTNumberStrToDouble(capacity);
+                                beer.capacity = Helper.ConvertPTNumberStrToDouble(capacity);
                             }
 
                             break;
@@ -128,7 +128,7 @@ namespace SBPriceCheckerCore.Parsers
                     List<string> priceElems = priceHtml.Split(' ').ToList<string>();
                     if (priceElems.Any() && priceElems.Count > 1)
                     {
-                        beer.Price = Helper.ConvertPTNumberStrToDouble(priceElems.ElementAt(1));
+                        beer.price = Helper.ConvertPTNumberStrToDouble(priceElems.ElementAt(1));
                     }
                 }
 
@@ -148,14 +148,14 @@ namespace SBPriceCheckerCore.Parsers
                     Elements discountTypeHtml = beerHtml.SiblingElements.Select("input.WebDiscountType");
                     if (discountTypeHtml.Any())
                     {
-                        beer.DiscountType = discountTypeHtml.First().Attr("value");
+                        beer.discountType = discountTypeHtml.First().Attr("value");
                     }
 
                     Elements discountValueHtml = beerHtml.SiblingElements.Select("input.WebDiscountValue");
                     if (discountValueHtml.Any())
                     {
                         string discountValue = discountValueHtml.First().Attr("value");
-                        beer.DiscountValue = Helper.ConvertPTNumberStrToDouble(discountValue);
+                        beer.discountValue = Helper.ConvertPTNumberStrToDouble(discountValue);
                     }
                 }
 
@@ -169,27 +169,27 @@ namespace SBPriceCheckerCore.Parsers
                     List<string> priceLElems = priceLHtml.Split(' ').ToList<string>();
                     if (priceLElems.Any() && priceLElems.Count > 1)
                     {
-                        beer.PricePerLitre = Helper.ConvertPTNumberStrToDouble(priceLElems.ElementAt(1));
+                        beer.pricePerLitre = Helper.ConvertPTNumberStrToDouble(priceLElems.ElementAt(1));
                     }
                 }
 
-                if (beer.hasDiscount == true && !String.IsNullOrEmpty(beer.DiscountType))
+                if (beer.hasDiscount == true && !String.IsNullOrEmpty(beer.discountType))
                 {
-                    if (beer.DiscountType.Equals("Value"))
+                    if (beer.discountType.Equals("Value"))
                     {
-                        double newPrice = beer.Price - beer.DiscountValue;
-                        double tCapacity = beer.Total * beer.Capacity;
+                        double newPrice = beer.price - beer.discountValue;
+                        double tCapacity = beer.total * beer.capacity;
                         double newPriceL = newPrice / tCapacity;
 
-                        beer.PricePerLitre = Math.Round(newPriceL, 2, MidpointRounding.AwayFromZero);
+                        beer.pricePerLitre = Math.Round(newPriceL, 2, MidpointRounding.AwayFromZero);
                     }
-                    else if (beer.DiscountType.Equals("Percentage"))
+                    else if (beer.discountType.Equals("Percentage"))
                     {
-                        double newPrice = beer.Price * beer.DiscountValue / 100;
-                        double tCapacity = beer.Total * beer.Capacity;
+                        double newPrice = beer.price * beer.discountValue / 100;
+                        double tCapacity = beer.total * beer.capacity;
                         double newPriceL = newPrice / tCapacity;
 
-                        beer.PricePerLitre = Math.Round(newPriceL, 2, MidpointRounding.AwayFromZero);
+                        beer.pricePerLitre = Math.Round(newPriceL, 2, MidpointRounding.AwayFromZero);
                     }
                 }
 
@@ -198,7 +198,8 @@ namespace SBPriceCheckerCore.Parsers
                 _DbFromContinente.Add(beer);
             }
 
-            return _DbFromContinente.OrderBy(x => x.PricePerLitre);
+            //return _DbFromContinente.OrderBy(x => x.PricePerLitre);
+            return _DbFromContinente.AsQueryable();
         }
     }
 }

@@ -8,14 +8,14 @@ namespace SBPriceCheckerCore.Models
 {
     public class Beer
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public int Total { get; set; }
-        public double Capacity { get; set; }
-        public double Price { get; set; }
-        public double PricePerLitre { get; set; }
+        public int id { get; set; }
+        public string name { get; set; }
+        public int total { get; set; }
+        public double capacity { get; set; }
+        public double price { get; set; }
+        public double pricePerLitre { get; set; }
         public bool hasDiscount { get; set; }
-        public string DiscountType { get; set; }
-        public double DiscountValue { get; set; }
+        public string discountType { get; set; }
+        public double discountValue { get; set; }
     }
 }

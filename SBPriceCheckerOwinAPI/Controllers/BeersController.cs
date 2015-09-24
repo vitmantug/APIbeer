@@ -23,8 +23,6 @@ namespace SBPriceCheckerOwinAPI.Controllers
 
         public IEnumerable<Beer> Get()
         {
-            Console.WriteLine("Pedido efectuado");
-
             Continente parser = new Continente();
             return parser.GetBeers();
 

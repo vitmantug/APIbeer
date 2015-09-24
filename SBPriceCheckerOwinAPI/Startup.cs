@@ -10,6 +10,7 @@ using System.Net.Http.Headers;
 using System.Net.Http.Formatting;
 using SBPriceCheckerCore.Helpers;
 using Newtonsoft.Json.Serialization;
+using SpringComp.Owin;
 
 namespace SBPriceCheckerOwinAPI
 {
@@ -18,10 +19,23 @@ namespace SBPriceCheckerOwinAPI
         // This method is required by Katana:
         public void Configuration(IAppBuilder app)
         {
-            var webApiConfiguration = ConfigureWebApi();
+            // Microsoft Azure table columns can hold values less than or equal to 64KB.
 
+            app.UseHttpTracking(
+                new HttpTrackingOptions
+                {
+                    TrackingStore = new HttpTrackingStore(),
+                    TrackingIdPropertyName = "x-tracking-id",
+                    MaximumRecordedRequestLength = 64 * 1024,
+                    MaximumRecordedResponseLength = 64 * 1024,
+                }
+                );
+
+            var webApiConfiguration = ConfigureWebApi();
             // Use the extension method provided by the WebApi.Owin library:
             app.UseWebApi(webApiConfiguration);
+
+            webApiConfiguration.MapHttpAttributeRoutes();
         }
 
         private HttpConfiguration ConfigureWebApi()

@@ -1,29 +1,13 @@
-# README #
+# APIBeer #
 
-This README would normally document whatever steps are necessary to get your application up and running.
+Para uma carteira mais feliz na compra de cerveja!
 
-### What is this repository for? ###
+### Qual é o objectivo desta API? ###
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+* Obter os preços das cervejas da marca Super Bock, a partir do site do Continente, e calcular o preço por litro tendo em contas as promoções existentes.
+* Futuramente, abranger mais superfícies comerciais (Jumbo, El Corte Inglés...)
 
-### How do I get set up? ###
+### Onde posso ver a API em funcionamento? ###
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
-
-### Contribution guidelines ###
-
-* Writing tests
-* Code review
-* Other guidelines
-
-### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact
+* [API](http://synology.servebeer.com:8089/api/beers/)
+* [Web Client](http://synology.servebeer.com/apibeer.html)

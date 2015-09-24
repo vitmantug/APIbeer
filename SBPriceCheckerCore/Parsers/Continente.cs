@@ -183,6 +183,14 @@ namespace SBPriceCheckerCore.Parsers
 
                         beer.PricePerLitre = Math.Round(newPriceL, 2, MidpointRounding.AwayFromZero);
                     }
+                    else if (beer.DiscountType.Equals("Percentage"))
+                    {
+                        double newPrice = beer.Price * beer.DiscountValue / 100;
+                        double tCapacity = beer.Total * beer.Capacity;
+                        double newPriceL = newPrice / tCapacity;
+
+                        beer.PricePerLitre = Math.Round(newPriceL, 2, MidpointRounding.AwayFromZero);
+                    }
                 }
 
                 #endregion

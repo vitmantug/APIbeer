@@ -21,6 +21,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Website", "Website", "{9CB626FF-2177-418E-9739-B5F31CFE4CFE}"
 	ProjectSection(SolutionItems) = preProject
 		Website\apibeer.html = Website\apibeer.html
+		Website\index-v1.html = Website\index-v1.html
 		Website\index.html = Website\index.html
 	EndProjectSection
 EndProject
@@ -28,6 +29,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "resources", "resources", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "js", "js", "{9801853F-E53A-4CA5-8521-BCC698D7317A}"
 	ProjectSection(SolutionItems) = preProject
+		Website\resources\js\interface-2.0.js = Website\resources\js\interface-2.0.js
 		Website\resources\js\interface.js = Website\resources\js\interface.js
 		Website\resources\js\jquery-1.10.2.min.js = Website\resources\js\jquery-1.10.2.min.js
 		Website\resources\js\jquery.tablesorter.min.js = Website\resources\js\jquery.tablesorter.min.js
@@ -38,6 +40,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "css", "css", "{A77C0E60-F74
 	ProjectSection(SolutionItems) = preProject
 		Website\resources\css\bg.png = Website\resources\css\bg.png
 		Website\resources\css\bg_feeds.jpg = Website\resources\css\bg_feeds.jpg
+		Website\resources\css\clean.css = Website\resources\css\clean.css
 		Website\resources\css\down-arrow.png = Website\resources\css\down-arrow.png
 		Website\resources\css\styles.css = Website\resources\css\styles.css
 		Website\resources\css\up-arrow.png = Website\resources\css\up-arrow.png
@@ -49,6 +52,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "fonts", "fonts", "{0ABC1686
 		Website\resources\fonts\sb_pakenham-webfont.svg = Website\resources\fonts\sb_pakenham-webfont.svg
 		Website\resources\fonts\sb_pakenham-webfont.ttf = Website\resources\fonts\sb_pakenham-webfont.ttf
 		Website\resources\fonts\sb_pakenham-webfont.woff = Website\resources\fonts\sb_pakenham-webfont.woff
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "images", "images", "{93BD3397-17F4-462B-9DB9-C3E1849F0ED2}"
+	ProjectSection(SolutionItems) = preProject
+		Website\images\arrow-left.png = Website\images\arrow-left.png
+		Website\images\arrow-right.png = Website\images\arrow-right.png
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "images", "images", "{4DEED642-CDA1-45E6-A4A0-803EB35479C5}"
+	ProjectSection(SolutionItems) = preProject
+		Website\resources\images\search.png = Website\resources\images\search.png
 	EndProjectSection
 EndProject
 Global
@@ -82,5 +96,7 @@ Global
 		{9801853F-E53A-4CA5-8521-BCC698D7317A} = {D43D58BB-C30D-47BA-855B-B85E1B04D85E}
 		{A77C0E60-F742-461F-B130-8CDBBA846B40} = {D43D58BB-C30D-47BA-855B-B85E1B04D85E}
 		{0ABC1686-198D-4BA8-A202-5A34869D8362} = {D43D58BB-C30D-47BA-855B-B85E1B04D85E}
+		{93BD3397-17F4-462B-9DB9-C3E1849F0ED2} = {9CB626FF-2177-418E-9739-B5F31CFE4CFE}
+		{4DEED642-CDA1-45E6-A4A0-803EB35479C5} = {D43D58BB-C30D-47BA-855B-B85E1B04D85E}
 	EndGlobalSection
 EndGlobal

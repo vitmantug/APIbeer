@@ -212,3 +212,8 @@ h1 {
             font-weight: 900;
             font-size: 15px;
         }
+
+
+        #spinner{
+            height: 150px;
+        }

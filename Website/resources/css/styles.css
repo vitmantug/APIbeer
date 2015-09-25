@@ -61,6 +61,19 @@ body {
         border-bottom: 1px solid #d6a15f;
     }
 
+    body h3 {
+        text-align: center;
+        font-family: 'SBPakenham';
+        margin: 0;
+        font-weight: 400;
+        margin-bottom: 20px;
+        width: 100%;
+        display: inline-block;
+        font-size: 20px;
+        color: red;
+        border-top: 1px solid #d6a15f;
+    }
+
 ::selection {
     background: #5f74a0;
     color: #fff;
@@ -144,14 +157,15 @@ h1 {
 
 #beerslist {
     margin: 0 auto;
-    font-size: 1.2em;
+    font-size: 14px;
     margin-bottom: 15px;
+    width: 100%;
 }
 
 
     #beerslist thead {
         cursor: pointer;
-        background: #c9dff0;
+        background: #d6a15f;
     }
 
         #beerslist thead tr th {
@@ -196,4 +210,5 @@ h1 {
             background-color: red;
             color: #d6a15f;
             font-weight: 900;
+            font-size: 15px;
         }

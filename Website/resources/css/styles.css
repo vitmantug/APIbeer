@@ -1,0 +1,199 @@
+/* SUPERBOCK */
+
+@font-face {
+    font-family: 'SBPakenham';
+    src: url('../fonts/sb_pakenham-webfont.eot');
+    src: url('../fonts/sb_pakenham-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/sb_pakenham-webfont.woff') format('woff'), url('../fonts/sb_pakenham-webfont.ttf') format('truetype'), url('../fonts/sb_pakenham-webfont.svg#SBPakenham') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@import url('http://fonts.googleapis.com/css?family=Amarante');
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+    outline: none;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+html {
+    overflow-y: scroll;
+}
+
+body {
+    background: #eee url('bg_feeds.jpg');
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 62.5%;
+    line-height: 1;
+    color: #585858;
+    padding: 22px 10px;
+    padding-bottom: 55px;
+}
+
+    body h1 {
+        font-family: 'SBPakenham';
+        font-weight: 400;
+        font-size: 100px;
+        line-height: .7;
+        text-transform: uppercase;
+    }
+
+    body h2 {
+        text-align: center;
+        font-family: 'SBPakenham';
+        margin: 0;
+        font-weight: 400;
+        margin-bottom: 20px;
+        width: 100%;
+        display: inline-block;
+        font-size: 35px;
+        color: #d6a15f;
+        border-bottom: 1px solid #d6a15f;
+    }
+
+::selection {
+    background: #5f74a0;
+    color: #fff;
+}
+
+::-moz-selection {
+    background: #5f74a0;
+    color: #fff;
+}
+
+::-webkit-selection {
+    background: #5f74a0;
+    color: #fff;
+}
+
+br {
+    display: block;
+    line-height: 1.6em;
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+
+ol, ul {
+    list-style: none;
+}
+
+input, textarea {
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    outline: none;
+}
+
+blockquote, q {
+    quotes: none;
+}
+
+    blockquote:before, blockquote:after, q:before, q:after {
+        content: '';
+        content: none;
+    }
+
+strong, b {
+    font-weight: bold;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+img {
+    border: 0;
+    max-width: 100%;
+}
+
+h1 {
+    font-family: 'Amarante', Tahoma, sans-serif;
+    font-weight: bold;
+    font-size: 3.6em;
+    line-height: 1.7em;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+
+/** page structure **/
+#wrapper {
+    display: block;
+    width: 850px;
+    background: #fff;
+    margin: 0 auto;
+    padding: 10px 17px;
+    -webkit-box-shadow: 2px 2px 3px -1px rgba(0,0,0,0.35);
+}
+
+#beerslist {
+    margin: 0 auto;
+    font-size: 1.2em;
+    margin-bottom: 15px;
+}
+
+
+    #beerslist thead {
+        cursor: pointer;
+        background: #c9dff0;
+    }
+
+        #beerslist thead tr th {
+            font-weight: bold;
+            padding: 12px 30px;
+            padding-left: 42px;
+        }
+
+            #beerslist thead tr th span {
+                padding-right: 20px;
+                background-repeat: no-repeat;
+                background-position: 100% 100%;
+            }
+
+            #beerslist thead tr th.headerSortUp, #beerslist thead tr th.headerSortDown {
+                background: #acc8dd;
+            }
+
+                #beerslist thead tr th.headerSortUp span {
+                    background-image: url('up-arrow.png');
+                }
+
+                #beerslist thead tr th.headerSortDown span {
+                    background-image: url('down-arrow.png');
+                }
+
+
+    #beerslist tbody tr {
+        color: #555;
+    }
+
+        #beerslist tbody tr td {
+            text-align: center;
+            padding: 15px 10px;
+        }
+
+            #beerslist tbody tr td.lalign {
+                text-align: left;
+            }
+
+        #beerslist tbody tr.reference {
+            background-color: red;
+            color: #d6a15f;
+            font-weight: 900;
+        }

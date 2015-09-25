@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SBPriceCheckerOwinAPI", "SBPriceCheckerOwinAPI\SBPriceCheckerOwinAPI.csproj", "{713BB232-391E-4A2B-844F-C0ACE364B4D3}"
 EndProject
@@ -16,6 +16,38 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{16E089
 		.nuget\NuGet.Config = .nuget\NuGet.Config
 		.nuget\NuGet.exe = .nuget\NuGet.exe
 		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Website", "Website", "{9CB626FF-2177-418E-9739-B5F31CFE4CFE}"
+	ProjectSection(SolutionItems) = preProject
+		Website\apibeer.html = Website\apibeer.html
+		Website\index.html = Website\index.html
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "resources", "resources", "{D43D58BB-C30D-47BA-855B-B85E1B04D85E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "js", "js", "{9801853F-E53A-4CA5-8521-BCC698D7317A}"
+	ProjectSection(SolutionItems) = preProject
+		Website\resources\js\interface.js = Website\resources\js\interface.js
+		Website\resources\js\jquery-1.10.2.min.js = Website\resources\js\jquery-1.10.2.min.js
+		Website\resources\js\jquery.tablesorter.min.js = Website\resources\js\jquery.tablesorter.min.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "css", "css", "{A77C0E60-F742-461F-B130-8CDBBA846B40}"
+	ProjectSection(SolutionItems) = preProject
+		Website\resources\css\bg.png = Website\resources\css\bg.png
+		Website\resources\css\bg_feeds.jpg = Website\resources\css\bg_feeds.jpg
+		Website\resources\css\down-arrow.png = Website\resources\css\down-arrow.png
+		Website\resources\css\styles.css = Website\resources\css\styles.css
+		Website\resources\css\up-arrow.png = Website\resources\css\up-arrow.png
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "fonts", "fonts", "{0ABC1686-198D-4BA8-A202-5A34869D8362}"
+	ProjectSection(SolutionItems) = preProject
+		Website\resources\fonts\sb_pakenham-webfont.eot = Website\resources\fonts\sb_pakenham-webfont.eot
+		Website\resources\fonts\sb_pakenham-webfont.svg = Website\resources\fonts\sb_pakenham-webfont.svg
+		Website\resources\fonts\sb_pakenham-webfont.ttf = Website\resources\fonts\sb_pakenham-webfont.ttf
+		Website\resources\fonts\sb_pakenham-webfont.woff = Website\resources\fonts\sb_pakenham-webfont.woff
 	EndProjectSection
 EndProject
 Global
@@ -43,5 +75,11 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D43D58BB-C30D-47BA-855B-B85E1B04D85E} = {9CB626FF-2177-418E-9739-B5F31CFE4CFE}
+		{9801853F-E53A-4CA5-8521-BCC698D7317A} = {D43D58BB-C30D-47BA-855B-B85E1B04D85E}
+		{A77C0E60-F742-461F-B130-8CDBBA846B40} = {D43D58BB-C30D-47BA-855B-B85E1B04D85E}
+		{0ABC1686-198D-4BA8-A202-5A34869D8362} = {D43D58BB-C30D-47BA-855B-B85E1B04D85E}
 	EndGlobalSection
 EndGlobal

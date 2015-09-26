@@ -12,10 +12,16 @@ namespace SBPriceCheckerCore.Models
         public string name { get; set; }
         public int total { get; set; }
         public double capacity { get; set; }
-        public double price { get; set; }
+        public double priceBefore { get; set; }
+        public double priceAfter { get; set; }
         public double pricePerLitre { get; set; }
         public bool hasDiscount { get; set; }
         public string discountType { get; set; }
         public double discountValue { get; set; }
+        public DateTime promoStart { get; set; }
+        public DateTime promoEnd { get; set; }
+        public string store { get; set; }
+        public string imageUrl { get; set; }
+        public string detailsUrl { get; set; }
     }
 }

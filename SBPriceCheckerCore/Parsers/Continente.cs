@@ -17,6 +17,8 @@ namespace SBPriceCheckerCore.Parsers
 {
     public class Continente
     {
+        private static string URL_PRODUCT_IMAGE = "http://media.continente.pt/Sonae.eGlobal.Presentation.Web.Media/media.axd?resourceSearchType=2&resource=ProductId={0}(eCsf$RetekProductCatalog$MegastoreContinenteOnline$Continente)&siteId=1&channelId=1&width=128&height=128&defaultOptions=1";
+        private static string URL_PRODUCT_DETAILS = "http://www.continente.pt/stores/continente/pt-pt/public/Pages/ProductDetail.aspx?ProductId={0}";
         private static string URL_SEARCH = "http://www.continente.pt/pt-pt/public/Pages/searchresults.aspx?k=super%20bock#/?pl=160";
 
         private Helper Helper = new Helper();
@@ -32,6 +34,7 @@ namespace SBPriceCheckerCore.Parsers
             foreach (Element beerHtml in beersHtml)
             {
                 Beer beer = new Beer();
+                beer.store = "Continente";
 
                 #region parse Id
 
@@ -128,7 +131,8 @@ namespace SBPriceCheckerCore.Parsers
                     List<string> priceElems = priceHtml.Split(' ').ToList<string>();
                     if (priceElems.Any() && priceElems.Count > 1)
                     {
-                        beer.price = Helper.ConvertPTNumberStrToDouble(priceElems.ElementAt(1));
+                        beer.priceBefore = Helper.ConvertPTNumberStrToDouble(priceElems.ElementAt(1));
+                        beer.priceAfter = beer.priceBefore;
                     }
                 }
 
@@ -177,20 +181,34 @@ namespace SBPriceCheckerCore.Parsers
                 {
                     if (beer.discountType.Equals("Value"))
                     {
-                        double newPrice = beer.price - beer.discountValue;
+                        double newPrice = beer.priceBefore - beer.discountValue;
                         double tCapacity = beer.total * beer.capacity;
                         double newPriceL = newPrice / tCapacity;
 
                         beer.pricePerLitre = Math.Round(newPriceL, 2, MidpointRounding.AwayFromZero);
+
+                        beer.priceAfter = newPrice;
                     }
                     else if (beer.discountType.Equals("Percentage"))
                     {
-                        double newPrice = beer.price * beer.discountValue / 100;
+                        double newPrice = beer.priceBefore * beer.discountValue / 100;
                         double tCapacity = beer.total * beer.capacity;
                         double newPriceL = newPrice / tCapacity;
 
                         beer.pricePerLitre = Math.Round(newPriceL, 2, MidpointRounding.AwayFromZero);
+
+                        beer.priceAfter = newPrice;
                     }
+                }
+
+                #endregion
+
+                #region set beer urls
+
+                if (beer.id != null)
+                {
+                    beer.imageUrl = String.Format(URL_PRODUCT_IMAGE, beer.id);
+                    beer.detailsUrl = String.Format(URL_PRODUCT_DETAILS, beer.id);
                 }
 
                 #endregion

@@ -32,7 +32,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "js", "js", "{9801853F-E53A-
 		Website\resources\js\interface-2.0.js = Website\resources\js\interface-2.0.js
 		Website\resources\js\interface.js = Website\resources\js\interface.js
 		Website\resources\js\jquery-1.10.2.min.js = Website\resources\js\jquery-1.10.2.min.js
-		Website\resources\js\jquery.dataTables.min.js = Website\resources\js\jquery.dataTables.min.js
+		Website\resources\js\jquery.columns.min.js = Website\resources\js\jquery.columns.min.js
 		Website\resources\js\jquery.tablesorter.min.js = Website\resources\js\jquery.tablesorter.min.js
 		Website\resources\js\spin.min.js = Website\resources\js\spin.min.js
 	EndProjectSection
@@ -60,10 +60,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "images", "images", "{93BD33
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "images", "images", "{4DEED642-CDA1-45E6-A4A0-803EB35479C5}"
 	ProjectSection(SolutionItems) = preProject
-		Website\resources\css\bg_feeds.jpg = Website\resources\css\bg_feeds.jpg
-		Website\resources\css\down-arrow.png = Website\resources\css\down-arrow.png
 		Website\resources\images\search.png = Website\resources\images\search.png
-		Website\resources\css\up-arrow.png = Website\resources\css\up-arrow.png
 	EndProjectSection
 EndProject
 Global

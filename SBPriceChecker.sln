@@ -32,6 +32,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "js", "js", "{9801853F-E53A-
 		Website\resources\js\interface-2.0.js = Website\resources\js\interface-2.0.js
 		Website\resources\js\interface.js = Website\resources\js\interface.js
 		Website\resources\js\jquery-1.10.2.min.js = Website\resources\js\jquery-1.10.2.min.js
+		Website\resources\js\jquery.columns.min.js = Website\resources\js\jquery.columns.min.js
 		Website\resources\js\jquery.tablesorter.min.js = Website\resources\js\jquery.tablesorter.min.js
 		Website\resources\js\spin.min.js = Website\resources\js\spin.min.js
 	EndProjectSection

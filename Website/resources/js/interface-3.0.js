@@ -22,7 +22,8 @@ $(document).ready(function () {
                     "targets": 0,
                     "orderable": false
                 }],
-                "order": [[5, "asc"]]
+                "order": [[5, "asc"]],
+                "iDisplayLength": 25
             });
         });
 });

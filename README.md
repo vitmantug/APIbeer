@@ -10,4 +10,4 @@ Para uma carteira mais feliz na compra de cerveja!
 ### Onde posso ver a API em funcionamento? ###
 
 * [API](http://synology.servebeer.com:8089/api/beers/)
-* [Web Client](http://synology.servebeer.com/apibeer.html)
+* [Web Client](http://synology.servebeer.com/apibeer/)

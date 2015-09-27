@@ -17,16 +17,18 @@ $(document).ready(function () {
             hideSpinner();
 
             //Enable table sorter after filling the table
-            $('#beerslist').DataTable();
+            $('#beerslist').DataTable({
+                "columnDefs": [{
+                    "targets": 0,
+                    "orderable": false
+                }],
+                "order": [[5, "asc"]]
+            });
         });
 });
 
 function formatItem(item) {
 
-    var trOpen = '<tr>';
-
-    //if (item.total == item.capacity)
-    //    trOpen = '<tr class=\"reference\">';
     var img = '<td><img src=\"' + item.imageUrl + '\"/></td>';
     var name = '<td><a href=\"' + item.detailsUrl + '"\" target=\"_blank\">' + item.name + '</a></td>';
     var total = '<td>' + item.total + '</td>';
@@ -34,7 +36,7 @@ function formatItem(item) {
     var price = '<td>' + item.priceAfter + '</td>';
     var ppl = '<td>' + item.pricePerLitre + '</td>';
 
-    return trOpen + img + name + total + capacity + price + ppl + '</tr>';
+    return '<tr>' + img + name + total + capacity + price + ppl + '</tr>';
 }
 
 var spinner;

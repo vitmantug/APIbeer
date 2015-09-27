@@ -28,7 +28,7 @@ function formatItem(item) {
     //if (item.total == item.capacity)
     //    trOpen = '<tr class=\"reference\">';
 
-    var name = '<td>' + item.name + '</td>';
+    var name = '<td><a href=\"' + item.detailsUrl + '"\">' + item.name + '</a></td>';
     var total = '<td>' + item.total + '</td>';
     var capacity = '<td>' + item.capacity + '</td>';
     var ppl = '<td>' + item.pricePerLitre + '</td>';

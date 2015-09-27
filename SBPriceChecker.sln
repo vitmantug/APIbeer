@@ -34,7 +34,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "js", "js", "{9801853F-E53A-
 		Website\resources\js\interface.js = Website\resources\js\interface.js
 		Website\resources\js\jquery-1.10.2.min.js = Website\resources\js\jquery-1.10.2.min.js
 		Website\resources\js\jquery.columns.min.js = Website\resources\js\jquery.columns.min.js
-		Website\resources\js\jquery.dataTables.min.js = Website\resources\js\jquery.dataTables.min.js
 		Website\resources\js\jquery.tablesorter.min.js = Website\resources\js\jquery.tablesorter.min.js
 		Website\resources\js\spin.min.js = Website\resources\js\spin.min.js
 	EndProjectSection
@@ -42,7 +41,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "css", "css", "{A77C0E60-F742-461F-B130-8CDBBA846B40}"
 	ProjectSection(SolutionItems) = preProject
 		Website\resources\css\clean.css = Website\resources\css\clean.css
-		Website\resources\css\jquery.dataTables.min.css = Website\resources\css\jquery.dataTables.min.css
 		Website\resources\css\styles.css = Website\resources\css\styles.css
 	EndProjectSection
 EndProject
@@ -63,90 +61,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "images", "images", "{4DEED642-CDA1-45E6-A4A0-803EB35479C5}"
 	ProjectSection(SolutionItems) = preProject
 		Website\resources\images\search.png = Website\resources\images\search.png
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataTables", "DataTables", "{D7AB529C-07CF-4EDE-8813-39F79EA11E38}"
-	ProjectSection(SolutionItems) = preProject
-		Website\resources\DataTables\datatables.css = Website\resources\DataTables\datatables.css
-		Website\resources\DataTables\datatables.js = Website\resources\DataTables\datatables.js
-		Website\resources\DataTables\datatables.min.css = Website\resources\DataTables\datatables.min.css
-		Website\resources\DataTables\datatables.min.js = Website\resources\DataTables\datatables.min.js
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Bootstrap-3.3.5", "Bootstrap-3.3.5", "{7B38C6CB-5266-4B7B-ABED-D61BD32887B2}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataTables-1.10.9", "DataTables-1.10.9", "{8C882FCC-ED61-4C25-AB68-01B2577B5B25}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Responsive-1.0.7", "Responsive-1.0.7", "{318635B6-6EC0-4CFD-8655-2E7B2FE3D223}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "js", "js", "{6373332C-7DCB-44A6-A3F9-B02DE0144637}"
-	ProjectSection(SolutionItems) = preProject
-		Website\resources\DataTables\Responsive-1.0.7\js\dataTables.responsive.js = Website\resources\DataTables\Responsive-1.0.7\js\dataTables.responsive.js
-		Website\resources\DataTables\Responsive-1.0.7\js\dataTables.responsive.min.js = Website\resources\DataTables\Responsive-1.0.7\js\dataTables.responsive.min.js
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "css", "css", "{C2F454F6-83D3-497A-A9B1-E11155357B97}"
-	ProjectSection(SolutionItems) = preProject
-		Website\resources\DataTables\Responsive-1.0.7\css\responsive.bootstrap.css = Website\resources\DataTables\Responsive-1.0.7\css\responsive.bootstrap.css
-		Website\resources\DataTables\Responsive-1.0.7\css\responsive.bootstrap.min.css = Website\resources\DataTables\Responsive-1.0.7\css\responsive.bootstrap.min.css
-		Website\resources\DataTables\Responsive-1.0.7\css\responsive.dataTables.css = Website\resources\DataTables\Responsive-1.0.7\css\responsive.dataTables.css
-		Website\resources\DataTables\Responsive-1.0.7\css\responsive.dataTables.min.css = Website\resources\DataTables\Responsive-1.0.7\css\responsive.dataTables.min.css
-		Website\resources\DataTables\Responsive-1.0.7\css\responsive.foundation.css = Website\resources\DataTables\Responsive-1.0.7\css\responsive.foundation.css
-		Website\resources\DataTables\Responsive-1.0.7\css\responsive.foundation.min.css = Website\resources\DataTables\Responsive-1.0.7\css\responsive.foundation.min.css
-		Website\resources\DataTables\Responsive-1.0.7\css\responsive.jqueryui.css = Website\resources\DataTables\Responsive-1.0.7\css\responsive.jqueryui.css
-		Website\resources\DataTables\Responsive-1.0.7\css\responsive.jqueryui.min.css = Website\resources\DataTables\Responsive-1.0.7\css\responsive.jqueryui.min.css
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "js", "js", "{1E44B87D-8088-4876-A1A5-177764BD9B7C}"
-	ProjectSection(SolutionItems) = preProject
-		Website\resources\DataTables\DataTables-1.10.9\js\dataTables.bootstrap.js = Website\resources\DataTables\DataTables-1.10.9\js\dataTables.bootstrap.js
-		Website\resources\DataTables\DataTables-1.10.9\js\dataTables.bootstrap.min.js = Website\resources\DataTables\DataTables-1.10.9\js\dataTables.bootstrap.min.js
-		Website\resources\DataTables\DataTables-1.10.9\js\dataTables.foundation.js = Website\resources\DataTables\DataTables-1.10.9\js\dataTables.foundation.js
-		Website\resources\DataTables\DataTables-1.10.9\js\dataTables.foundation.min.js = Website\resources\DataTables\DataTables-1.10.9\js\dataTables.foundation.min.js
-		Website\resources\DataTables\DataTables-1.10.9\js\dataTables.jqueryui.js = Website\resources\DataTables\DataTables-1.10.9\js\dataTables.jqueryui.js
-		Website\resources\DataTables\DataTables-1.10.9\js\dataTables.jqueryui.min.js = Website\resources\DataTables\DataTables-1.10.9\js\dataTables.jqueryui.min.js
-		Website\resources\DataTables\DataTables-1.10.9\js\jquery.dataTables.js = Website\resources\DataTables\DataTables-1.10.9\js\jquery.dataTables.js
-		Website\resources\DataTables\DataTables-1.10.9\js\jquery.dataTables.min.js = Website\resources\DataTables\DataTables-1.10.9\js\jquery.dataTables.min.js
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "css", "css", "{A6D16C53-8E60-466D-923B-97072E976CE8}"
-	ProjectSection(SolutionItems) = preProject
-		Website\resources\DataTables\DataTables-1.10.9\css\dataTables.bootstrap.css = Website\resources\DataTables\DataTables-1.10.9\css\dataTables.bootstrap.css
-		Website\resources\DataTables\DataTables-1.10.9\css\dataTables.bootstrap.min.css = Website\resources\DataTables\DataTables-1.10.9\css\dataTables.bootstrap.min.css
-		Website\resources\DataTables\DataTables-1.10.9\css\dataTables.foundation.css = Website\resources\DataTables\DataTables-1.10.9\css\dataTables.foundation.css
-		Website\resources\DataTables\DataTables-1.10.9\css\dataTables.foundation.min.css = Website\resources\DataTables\DataTables-1.10.9\css\dataTables.foundation.min.css
-		Website\resources\DataTables\DataTables-1.10.9\css\dataTables.jqueryui.css = Website\resources\DataTables\DataTables-1.10.9\css\dataTables.jqueryui.css
-		Website\resources\DataTables\DataTables-1.10.9\css\dataTables.jqueryui.min.css = Website\resources\DataTables\DataTables-1.10.9\css\dataTables.jqueryui.min.css
-		Website\resources\DataTables\DataTables-1.10.9\css\jquery.dataTables.css = Website\resources\DataTables\DataTables-1.10.9\css\jquery.dataTables.css
-		Website\resources\DataTables\DataTables-1.10.9\css\jquery.dataTables.min.css = Website\resources\DataTables\DataTables-1.10.9\css\jquery.dataTables.min.css
-		Website\resources\DataTables\DataTables-1.10.9\css\jquery.dataTables_themeroller.css = Website\resources\DataTables\DataTables-1.10.9\css\jquery.dataTables_themeroller.css
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "images", "images", "{EC87D839-32C0-4244-BD4D-36640447BC07}"
-	ProjectSection(SolutionItems) = preProject
-		Website\resources\DataTables\DataTables-1.10.9\images\sort_asc.png = Website\resources\DataTables\DataTables-1.10.9\images\sort_asc.png
-		Website\resources\DataTables\DataTables-1.10.9\images\sort_asc_disabled.png = Website\resources\DataTables\DataTables-1.10.9\images\sort_asc_disabled.png
-		Website\resources\DataTables\DataTables-1.10.9\images\sort_both.png = Website\resources\DataTables\DataTables-1.10.9\images\sort_both.png
-		Website\resources\DataTables\DataTables-1.10.9\images\sort_desc.png = Website\resources\DataTables\DataTables-1.10.9\images\sort_desc.png
-		Website\resources\DataTables\DataTables-1.10.9\images\sort_desc_disabled.png = Website\resources\DataTables\DataTables-1.10.9\images\sort_desc_disabled.png
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "css", "css", "{369DC500-BD0F-49BC-949C-9B0E567DEAA0}"
-	ProjectSection(SolutionItems) = preProject
-		Website\resources\DataTables\Responsive-1.0.7\css\responsive.bootstrap.css = Website\resources\DataTables\Responsive-1.0.7\css\responsive.bootstrap.css
-		Website\resources\DataTables\Responsive-1.0.7\css\responsive.bootstrap.min.css = Website\resources\DataTables\Responsive-1.0.7\css\responsive.bootstrap.min.css
-		Website\resources\DataTables\Responsive-1.0.7\css\responsive.dataTables.css = Website\resources\DataTables\Responsive-1.0.7\css\responsive.dataTables.css
-		Website\resources\DataTables\Responsive-1.0.7\css\responsive.dataTables.min.css = Website\resources\DataTables\Responsive-1.0.7\css\responsive.dataTables.min.css
-		Website\resources\DataTables\Responsive-1.0.7\css\responsive.foundation.css = Website\resources\DataTables\Responsive-1.0.7\css\responsive.foundation.css
-		Website\resources\DataTables\Responsive-1.0.7\css\responsive.foundation.min.css = Website\resources\DataTables\Responsive-1.0.7\css\responsive.foundation.min.css
-		Website\resources\DataTables\Responsive-1.0.7\css\responsive.jqueryui.css = Website\resources\DataTables\Responsive-1.0.7\css\responsive.jqueryui.css
-		Website\resources\DataTables\Responsive-1.0.7\css\responsive.jqueryui.min.css = Website\resources\DataTables\Responsive-1.0.7\css\responsive.jqueryui.min.css
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "js", "js", "{2D773276-03CF-42BC-A396-C4866268EE19}"
-	ProjectSection(SolutionItems) = preProject
-		Website\resources\DataTables\Responsive-1.0.7\js\dataTables.responsive.js = Website\resources\DataTables\Responsive-1.0.7\js\dataTables.responsive.js
-		Website\resources\DataTables\Responsive-1.0.7\js\dataTables.responsive.min.js = Website\resources\DataTables\Responsive-1.0.7\js\dataTables.responsive.min.js
 	EndProjectSection
 EndProject
 Global
@@ -182,16 +96,5 @@ Global
 		{0ABC1686-198D-4BA8-A202-5A34869D8362} = {D43D58BB-C30D-47BA-855B-B85E1B04D85E}
 		{93BD3397-17F4-462B-9DB9-C3E1849F0ED2} = {9CB626FF-2177-418E-9739-B5F31CFE4CFE}
 		{4DEED642-CDA1-45E6-A4A0-803EB35479C5} = {D43D58BB-C30D-47BA-855B-B85E1B04D85E}
-		{D7AB529C-07CF-4EDE-8813-39F79EA11E38} = {D43D58BB-C30D-47BA-855B-B85E1B04D85E}
-		{7B38C6CB-5266-4B7B-ABED-D61BD32887B2} = {D7AB529C-07CF-4EDE-8813-39F79EA11E38}
-		{8C882FCC-ED61-4C25-AB68-01B2577B5B25} = {D7AB529C-07CF-4EDE-8813-39F79EA11E38}
-		{318635B6-6EC0-4CFD-8655-2E7B2FE3D223} = {D7AB529C-07CF-4EDE-8813-39F79EA11E38}
-		{6373332C-7DCB-44A6-A3F9-B02DE0144637} = {318635B6-6EC0-4CFD-8655-2E7B2FE3D223}
-		{C2F454F6-83D3-497A-A9B1-E11155357B97} = {318635B6-6EC0-4CFD-8655-2E7B2FE3D223}
-		{1E44B87D-8088-4876-A1A5-177764BD9B7C} = {8C882FCC-ED61-4C25-AB68-01B2577B5B25}
-		{A6D16C53-8E60-466D-923B-97072E976CE8} = {8C882FCC-ED61-4C25-AB68-01B2577B5B25}
-		{EC87D839-32C0-4244-BD4D-36640447BC07} = {8C882FCC-ED61-4C25-AB68-01B2577B5B25}
-		{369DC500-BD0F-49BC-949C-9B0E567DEAA0} = {7B38C6CB-5266-4B7B-ABED-D61BD32887B2}
-		{2D773276-03CF-42BC-A396-C4866268EE19} = {7B38C6CB-5266-4B7B-ABED-D61BD32887B2}
 	EndGlobalSection
 EndGlobal

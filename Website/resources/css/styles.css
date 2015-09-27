@@ -148,7 +148,7 @@ h1 {
 /** page structure **/
 #wrapper {
     display: block;
-    width: auto;
+    width: 85%;
     background: #fff;
     margin: 0 auto;
     padding: 10px 17px;
@@ -172,6 +172,7 @@ h1 {
             font-weight: bold;
             padding: 12px 30px;
             padding-left: 42px;
+            text-align: center;
         }
 
             #beerslist thead tr th span {
@@ -192,6 +193,11 @@ h1 {
         #beerslist tbody tr td {
             text-align: center;
             padding: 15px 10px;
+            vertical-align: middle;
+        }
+
+       #beerslist tbody tr td img{
+            width: 60px;
         }
 
             #beerslist tbody tr td.lalign {

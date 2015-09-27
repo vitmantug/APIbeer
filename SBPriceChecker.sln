@@ -21,8 +21,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Website", "Website", "{9CB626FF-2177-418E-9739-B5F31CFE4CFE}"
 	ProjectSection(SolutionItems) = preProject
 		Website\apibeer.html = Website\apibeer.html
-		Website\index-v1.html = Website\index-v1.html
-		Website\index.html = Website\index.html
+		index.html = index.html
+		Website\index_v2.html = Website\index_v2.html
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "resources", "resources", "{D43D58BB-C30D-47BA-855B-B85E1B04D85E}"
@@ -30,9 +30,11 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "js", "js", "{9801853F-E53A-4CA5-8521-BCC698D7317A}"
 	ProjectSection(SolutionItems) = preProject
 		Website\resources\js\interface-2.0.js = Website\resources\js\interface-2.0.js
+		Website\resources\js\interface-3.0.js = Website\resources\js\interface-3.0.js
 		Website\resources\js\interface.js = Website\resources\js\interface.js
 		Website\resources\js\jquery-1.10.2.min.js = Website\resources\js\jquery-1.10.2.min.js
 		Website\resources\js\jquery.columns.min.js = Website\resources\js\jquery.columns.min.js
+		Website\resources\js\jquery.dataTables.min.js = Website\resources\js\jquery.dataTables.min.js
 		Website\resources\js\jquery.tablesorter.min.js = Website\resources\js\jquery.tablesorter.min.js
 		Website\resources\js\spin.min.js = Website\resources\js\spin.min.js
 	EndProjectSection

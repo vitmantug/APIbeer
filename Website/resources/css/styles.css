@@ -184,14 +184,6 @@ h1 {
                 background: #acc8dd;
             }
 
-                /*#beerslist thead tr th.headerSortUp span {
-                    background-image: url('up-arrow.png');
-                }
-
-                #beerslist thead tr th.headerSortDown span {
-                    background-image: url('down-arrow.png');
-                }*/
-
 
     #beerslist tbody tr {
         color: #555;
@@ -214,6 +206,6 @@ h1 {
         }
 
 
-        #spinner{
-            height: 150px;
-        }
+#spinner {
+    height: 150px;
+}

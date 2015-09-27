@@ -37,7 +37,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="NSoup">
-      <HintPath>..\..\..\..\Users\vitorgoncalves\Desktop\NSoup.dll</HintPath>
+      <HintPath>..\..\SBPriceCheck\SBPriceCheck\bin\Debug\NSoup.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

@@ -31,7 +31,7 @@ html {
 }
 
 body {
-    background: #eee url('bg_feeds.jpg');
+    background: #eee url('../images/bg_feeds.jpg');
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 62.5%;
     line-height: 1;
@@ -184,13 +184,13 @@ h1 {
                 background: #acc8dd;
             }
 
-                #beerslist thead tr th.headerSortUp span {
+                /*#beerslist thead tr th.headerSortUp span {
                     background-image: url('up-arrow.png');
                 }
 
                 #beerslist thead tr th.headerSortDown span {
                     background-image: url('down-arrow.png');
-                }
+                }*/
 
 
     #beerslist tbody tr {

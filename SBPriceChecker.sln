@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SBPriceCheckerOwinAPI", "SBPriceCheckerOwinAPI\SBPriceCheckerOwinAPI.csproj", "{713BB232-391E-4A2B-844F-C0ACE364B4D3}"
 EndProject
@@ -32,18 +32,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "js", "js", "{9801853F-E53A-
 		Website\resources\js\interface-2.0.js = Website\resources\js\interface-2.0.js
 		Website\resources\js\interface.js = Website\resources\js\interface.js
 		Website\resources\js\jquery-1.10.2.min.js = Website\resources\js\jquery-1.10.2.min.js
+		Website\resources\js\jquery.dataTables.min.js = Website\resources\js\jquery.dataTables.min.js
 		Website\resources\js\jquery.tablesorter.min.js = Website\resources\js\jquery.tablesorter.min.js
 		Website\resources\js\spin.min.js = Website\resources\js\spin.min.js
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "css", "css", "{A77C0E60-F742-461F-B130-8CDBBA846B40}"
 	ProjectSection(SolutionItems) = preProject
-		Website\resources\css\bg.png = Website\resources\css\bg.png
-		Website\resources\css\bg_feeds.jpg = Website\resources\css\bg_feeds.jpg
 		Website\resources\css\clean.css = Website\resources\css\clean.css
-		Website\resources\css\down-arrow.png = Website\resources\css\down-arrow.png
+		Website\resources\css\jquery.dataTables.min.css = Website\resources\css\jquery.dataTables.min.css
 		Website\resources\css\styles.css = Website\resources\css\styles.css
-		Website\resources\css\up-arrow.png = Website\resources\css\up-arrow.png
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "fonts", "fonts", "{0ABC1686-198D-4BA8-A202-5A34869D8362}"
@@ -62,7 +60,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "images", "images", "{93BD33
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "images", "images", "{4DEED642-CDA1-45E6-A4A0-803EB35479C5}"
 	ProjectSection(SolutionItems) = preProject
+		Website\resources\css\bg_feeds.jpg = Website\resources\css\bg_feeds.jpg
+		Website\resources\css\down-arrow.png = Website\resources\css\down-arrow.png
 		Website\resources\images\search.png = Website\resources\images\search.png
+		Website\resources\css\up-arrow.png = Website\resources\css\up-arrow.png
 	EndProjectSection
 EndProject
 Global

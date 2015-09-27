@@ -27,13 +27,14 @@ function formatItem(item) {
 
     //if (item.total == item.capacity)
     //    trOpen = '<tr class=\"reference\">';
-
-    var name = '<td><a href=\"' + item.detailsUrl + '"\">' + item.name + '</a></td>';
+    var img = '<td><img src=\"' + item.imageUrl + '\"/></td>';
+    var name = '<td><a href=\"' + item.detailsUrl + '"\" target=\"_blank\">' + item.name + '</a></td>';
     var total = '<td>' + item.total + '</td>';
     var capacity = '<td>' + item.capacity + '</td>';
+    var price = '<td>' + item.priceAfter + '</td>';
     var ppl = '<td>' + item.pricePerLitre + '</td>';
 
-    return trOpen + name + total + capacity + ppl + '</tr>';
+    return trOpen + img + name + total + capacity + price + ppl + '</tr>';
 }
 
 var spinner;

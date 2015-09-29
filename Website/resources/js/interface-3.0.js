@@ -18,19 +18,35 @@ $(document).ready(function () {
 
             //Enable table sorter after filling the table
             $('#beerslist').DataTable({
-                "columnDefs": [{
-                    "targets": 0,
-                    "orderable": false
-                }],
-                "order": [[5, "asc"]],
-                "iDisplayLength": 25
+                "columnDefs":
+                    [{ "targets": [0], "orderable": false }],
+                    "order": [[5, "asc"]],
+                    "iDisplayLength": 25
             });
         });
 });
 
 function formatItem(item) {
 
-    var img = '<td><img src=\"' + item.imageUrl + '\"/></td>';
+    //var discount = '<td></td>';
+
+    //if (item.hasDiscount) {
+    //    if(item.discountType == 'Percentage')
+    //        discount = '<td><div class=\"superPriceIconLarge' + item.discountValue + '\"></div></td>';
+    //    else if(item.discountType == 'Value')
+    //        discount = '<td><div class=\"superPriceIconLarge\"></div></td>';
+    //}
+
+    var discount = '';
+
+    if (item.hasDiscount) {
+        if (item.discountType == 'Percentage')
+            discount = '<img class=\"superPriceIconLarge' + item.discountValue + '\" />';
+        else if (item.discountType == 'Value')
+            discount = '<img class=\"superPriceIconLarge\" />';
+    }
+        
+    var img = '<td><img src=\"' + item.imageUrl + '\"/>' + discount + '</td>';
     var name = '<td><a href=\"' + item.detailsUrl + '"\" target=\"_blank\">' + item.name + '</a></td>';
     var total = '<td>' + item.total + '</td>';
     var capacity = '<td>' + item.capacity + '</td>';

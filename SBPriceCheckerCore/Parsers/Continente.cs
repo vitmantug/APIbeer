@@ -131,7 +131,9 @@ namespace SBPriceCheckerCore.Parsers
                     List<string> priceElems = priceHtml.Split(' ').ToList<string>();
                     if (priceElems.Any() && priceElems.Count > 1)
                     {
-                        beer.priceBefore = Helper.ConvertPTNumberStrToDouble(priceElems.ElementAt(1));
+                        double price = Helper.ConvertPTNumberStrToDouble(priceElems.ElementAt(1));
+
+                        beer.priceBefore = Math.Round(price, 2, MidpointRounding.AwayFromZero);
                         beer.priceAfter = beer.priceBefore;
                     }
                 }
@@ -197,7 +199,7 @@ namespace SBPriceCheckerCore.Parsers
 
                         beer.pricePerLitre = Math.Round(newPriceL, 2, MidpointRounding.AwayFromZero);
 
-                        beer.priceAfter = newPrice;
+                        beer.priceAfter = Math.Round(newPrice, 2, MidpointRounding.AwayFromZero);
                     }
                 }
 

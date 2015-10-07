@@ -18,52 +18,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{16E089
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Website", "Website", "{9CB626FF-2177-418E-9739-B5F31CFE4CFE}"
-	ProjectSection(SolutionItems) = preProject
-		Website\apibeer.html = Website\apibeer.html
-		Website\favicon.ico = Website\favicon.ico
-		Website\index.html = Website\index.html
-		Website\index_v2.html = Website\index_v2.html
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "resources", "resources", "{D43D58BB-C30D-47BA-855B-B85E1B04D85E}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "js", "js", "{9801853F-E53A-4CA5-8521-BCC698D7317A}"
-	ProjectSection(SolutionItems) = preProject
-		Website\resources\js\interface-2.0.js = Website\resources\js\interface-2.0.js
-		Website\resources\js\interface-3.0.js = Website\resources\js\interface-3.0.js
-		Website\resources\js\interface.js = Website\resources\js\interface.js
-		Website\resources\js\jquery-1.10.2.min.js = Website\resources\js\jquery-1.10.2.min.js
-		Website\resources\js\jquery.columns.min.js = Website\resources\js\jquery.columns.min.js
-		Website\resources\js\jquery.tablesorter.min.js = Website\resources\js\jquery.tablesorter.min.js
-		Website\resources\js\spin.min.js = Website\resources\js\spin.min.js
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "css", "css", "{A77C0E60-F742-461F-B130-8CDBBA846B40}"
-	ProjectSection(SolutionItems) = preProject
-		Website\resources\css\clean.css = Website\resources\css\clean.css
-		Website\resources\css\styles.css = Website\resources\css\styles.css
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "fonts", "fonts", "{0ABC1686-198D-4BA8-A202-5A34869D8362}"
-	ProjectSection(SolutionItems) = preProject
-		Website\resources\fonts\sb_pakenham-webfont.eot = Website\resources\fonts\sb_pakenham-webfont.eot
-		Website\resources\fonts\sb_pakenham-webfont.svg = Website\resources\fonts\sb_pakenham-webfont.svg
-		Website\resources\fonts\sb_pakenham-webfont.ttf = Website\resources\fonts\sb_pakenham-webfont.ttf
-		Website\resources\fonts\sb_pakenham-webfont.woff = Website\resources\fonts\sb_pakenham-webfont.woff
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "images", "images", "{93BD3397-17F4-462B-9DB9-C3E1849F0ED2}"
-	ProjectSection(SolutionItems) = preProject
-		Website\images\arrow-left.png = Website\images\arrow-left.png
-		Website\images\arrow-right.png = Website\images\arrow-right.png
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "images", "images", "{4DEED642-CDA1-45E6-A4A0-803EB35479C5}"
-	ProjectSection(SolutionItems) = preProject
-		Website\resources\images\search.png = Website\resources\images\search.png
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -89,13 +43,5 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{D43D58BB-C30D-47BA-855B-B85E1B04D85E} = {9CB626FF-2177-418E-9739-B5F31CFE4CFE}
-		{9801853F-E53A-4CA5-8521-BCC698D7317A} = {D43D58BB-C30D-47BA-855B-B85E1B04D85E}
-		{A77C0E60-F742-461F-B130-8CDBBA846B40} = {D43D58BB-C30D-47BA-855B-B85E1B04D85E}
-		{0ABC1686-198D-4BA8-A202-5A34869D8362} = {D43D58BB-C30D-47BA-855B-B85E1B04D85E}
-		{93BD3397-17F4-462B-9DB9-C3E1849F0ED2} = {9CB626FF-2177-418E-9739-B5F31CFE4CFE}
-		{4DEED642-CDA1-45E6-A4A0-803EB35479C5} = {D43D58BB-C30D-47BA-855B-B85E1B04D85E}
 	EndGlobalSection
 EndGlobal

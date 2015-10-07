@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SBPriceCheckerOwinAPI", "SBPriceCheckerOwinAPI\SBPriceCheckerOwinAPI.csproj", "{713BB232-391E-4A2B-844F-C0ACE364B4D3}"
 EndProject
@@ -21,6 +21,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Website", "Website", "{9CB626FF-2177-418E-9739-B5F31CFE4CFE}"
 	ProjectSection(SolutionItems) = preProject
 		Website\apibeer.html = Website\apibeer.html
+		Website\favicon.ico = Website\favicon.ico
 		Website\index.html = Website\index.html
 		Website\index_v2.html = Website\index_v2.html
 	EndProjectSection

@@ -28,15 +28,6 @@ $(document).ready(function () {
 
 function formatItem(item) {
 
-    //var discount = '<td></td>';
-
-    //if (item.hasDiscount) {
-    //    if(item.discountType == 'Percentage')
-    //        discount = '<td><div class=\"superPriceIconLarge' + item.discountValue + '\"></div></td>';
-    //    else if(item.discountType == 'Value')
-    //        discount = '<td><div class=\"superPriceIconLarge\"></div></td>';
-    //}
-
     var discount = '';
 
     if (item.hasDiscount) {

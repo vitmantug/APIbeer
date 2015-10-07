@@ -189,7 +189,7 @@ namespace SBPriceCheckerCore.Parsers
 
                         beer.pricePerLitre = Math.Round(newPriceL, 2, MidpointRounding.AwayFromZero);
 
-                        beer.priceAfter = newPrice;
+                        beer.priceAfter = Math.Round(newPrice, 2, MidpointRounding.AwayFromZero);
                     }
                     else if (beer.discountType.Equals("Percentage"))
                     {

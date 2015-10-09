@@ -167,6 +167,24 @@ namespace SBPriceCheckerCore.Parsers
 
                 #endregion
 
+                #region parse discount dates
+
+                Elements discountStartHtml = beerHtml.SiblingElements.Select("input.WebDiscountStartDate");
+                if (discountStartHtml.Any())
+                {
+                    string discountStart = discountStartHtml.First().Attr("value");
+                    beer.promoStart = DateTime.Parse(discountStart);
+                }
+
+                Elements discountEndHtml = beerHtml.SiblingElements.Select("input.WebDiscountEndDate");
+                if (discountEndHtml.Any())
+                {
+                    string discountEnd = discountEndHtml.First().Attr("value");
+                    beer.promoEnd = DateTime.Parse(discountEnd);
+                }
+
+                #endregion
+
                 #region parse price per litre
 
                 string priceLHtml = beerHtml.SiblingElements.Select("div.pricePerLitre").Text;

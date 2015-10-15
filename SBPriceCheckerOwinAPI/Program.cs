@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Microsoft.Owin.Hosting;
+using System.Threading;
 
 namespace SBPriceCheckerOwinAPI
 {
@@ -17,8 +18,14 @@ namespace SBPriceCheckerOwinAPI
 
             Console.WriteLine("Starting web Server...");
             WebApp.Start<Startup>(baseUri);
+
             Console.WriteLine("Server running at {0} - press Enter to quit. ", baseUri);
-            Console.ReadLine();
+            //Console.ReadLine();
+
+            while (true)
+            {
+                Thread.Sleep(50);
+            }
         }
     }
 }

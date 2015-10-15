@@ -23,11 +23,11 @@ namespace SBPriceCheckerCore.Parsers
 
         private Helper Helper = new Helper();
 
-        public IQueryable<Beer> GetBeers()
+        public async Task<IQueryable<Beer>> GetBeers()
         {
             List<Beer> _DbFromContinente = new List<Beer>();
 
-            Document webpageHtml = NSoupClient.Parse(new WebClient().OpenRead(URL_SEARCH), "UTF-8");
+            Document webpageHtml = NSoupClient.Parse(await new WebClient().OpenReadTaskAsync(URL_SEARCH), "UTF-8");
 
             Elements beersHtml = webpageHtml.Body.SiblingElements.Select("div.productBox");
 

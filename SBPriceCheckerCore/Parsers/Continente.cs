@@ -23,221 +23,227 @@ namespace SBPriceCheckerCore.Parsers
 
         private Helper Helper = new Helper();
 
-        public async Task<IQueryable<Beer>> GetBeers()
+        public async Task<IEnumerable<Beer>> GetBeers()
         {
             List<Beer> _DbFromContinente = new List<Beer>();
 
-            Document webpageHtml = NSoupClient.Parse(await new WebClient().OpenReadTaskAsync(URL_SEARCH), "UTF-8");
-
-            Elements beersHtml = webpageHtml.Body.SiblingElements.Select("div.productBox");
-
-            foreach (Element beerHtml in beersHtml)
+            try
             {
-                Beer beer = new Beer();
-                beer.store = "Continente";
+                Document webpageHtml = NSoupClient.Parse(await new WebClient().OpenReadTaskAsync(URL_SEARCH), "UTF-8");
 
-                #region parse Id
+                Elements beersHtml = webpageHtml.Body.SiblingElements.Select("div.productBox");
 
-                Elements idHtml = beerHtml.SiblingElements.Select("input.item_pid");
-                if (idHtml.Any())
+                foreach (Element beerHtml in beersHtml)
                 {
-                    string idValue = idHtml.First().Attr("value");
-                    if (!String.IsNullOrEmpty(idValue))
+                    Beer beer = new Beer();
+                    beer.store = "Continente";
+
+                    #region parse Id
+
+                    Elements idHtml = beerHtml.SiblingElements.Select("input.item_pid");
+                    if (idHtml.Any())
                     {
-                        List<string> values = idValue.Split('(').ToList<string>();
-                        if(values.Any())
+                        string idValue = idHtml.First().Attr("value");
+                        if (!String.IsNullOrEmpty(idValue))
                         {
-                            string value = values.ElementAt(0);
-                            int id = 0;
-                            if (int.TryParse(value, out id))
+                            List<string> values = idValue.Split('(').ToList<string>();
+                            if (values.Any())
                             {
-                                beer.id = id;
+                                string value = values.ElementAt(0);
+                                int id = 0;
+                                if (int.TryParse(value, out id))
+                                {
+                                    beer.id = id;
+                                }
                             }
                         }
                     }
-                }
 
-                #endregion
+                    #endregion
 
-                #region parse name
+                    #region parse name
 
-                string name = beerHtml.SiblingElements.Select("div.productTitle").Text;
-                beer.name = name;
+                    string name = beerHtml.SiblingElements.Select("div.productTitle").Text;
+                    beer.name = name;
 
-                #endregion
+                    #endregion
 
-                #region parse total and capacity
+                    #region parse total and capacity
 
-                string totalCapacity = beerHtml.SiblingElements.Select("div.productSubtitle").Text;
-                if (!String.IsNullOrEmpty(totalCapacity))
-                {
-                    string total = string.Empty;
-                    string capacity = string.Empty;
-                    string unity = string.Empty;
-
-                    List<string> totalCapacityElems = totalCapacity.Split(' ').ToList<string>();
-                    int n = totalCapacityElems.Count;
-
-                    switch (n)
+                    string totalCapacity = beerHtml.SiblingElements.Select("div.productSubtitle").Text;
+                    if (!String.IsNullOrEmpty(totalCapacity))
                     {
-                        case 3:
+                        string total = string.Empty;
+                        string capacity = string.Empty;
+                        string unity = string.Empty;
 
-                            beer.total = 1;
+                        List<string> totalCapacityElems = totalCapacity.Split(' ').ToList<string>();
+                        int n = totalCapacityElems.Count;
 
-                            capacity = totalCapacityElems.ElementAt(1);
-                            unity = totalCapacityElems.ElementAt(2);
+                        switch (n)
+                        {
+                            case 3:
 
-                            if (unity.Equals("cl"))
-                            {
-                                beer.capacity = Helper.ConvertPTNumberStrToDouble("0," + capacity);
-                            }
-                            else if (unity.Equals("lt"))
-                            {
-                                beer.capacity = Helper.ConvertPTNumberStrToDouble(capacity);
-                            }
+                                beer.total = 1;
 
-                            break;
+                                capacity = totalCapacityElems.ElementAt(1);
+                                unity = totalCapacityElems.ElementAt(2);
 
-                        case 5:
+                                if (unity.Equals("cl"))
+                                {
+                                    beer.capacity = Helper.ConvertPTNumberStrToDouble("0," + capacity);
+                                }
+                                else if (unity.Equals("lt"))
+                                {
+                                    beer.capacity = Helper.ConvertPTNumberStrToDouble(capacity);
+                                }
 
-                            total = totalCapacityElems.ElementAt(1);
-                            beer.total = Convert.ToInt32(total);
+                                break;
 
-                            capacity = totalCapacityElems.ElementAt(3);
-                            unity = totalCapacityElems.ElementAt(4);
+                            case 5:
 
-                            if (unity.Equals("cl"))
-                            {
-                                beer.capacity = Helper.ConvertPTNumberStrToDouble("0," + capacity);
-                            }
-                            else if (unity.Equals("lt"))
-                            {
-                                beer.capacity = Helper.ConvertPTNumberStrToDouble(capacity);
-                            }
+                                total = totalCapacityElems.ElementAt(1);
+                                beer.total = Convert.ToInt32(total);
 
-                            break;
-                        default:
-                            break;
-                    }
-                }
+                                capacity = totalCapacityElems.ElementAt(3);
+                                unity = totalCapacityElems.ElementAt(4);
 
-                #endregion
+                                if (unity.Equals("cl"))
+                                {
+                                    beer.capacity = Helper.ConvertPTNumberStrToDouble("0," + capacity);
+                                }
+                                else if (unity.Equals("lt"))
+                                {
+                                    beer.capacity = Helper.ConvertPTNumberStrToDouble(capacity);
+                                }
 
-                #region parse price
-
-                string priceHtml = beerHtml.SiblingElements.Select("div.pricePerUnit").Text;
-                if (!String.IsNullOrEmpty(priceHtml))
-                {
-                    List<string> priceElems = priceHtml.Split(' ').ToList<string>();
-                    if (priceElems.Any() && priceElems.Count > 1)
-                    {
-                        double price = Helper.ConvertPTNumberStrToDouble(priceElems.ElementAt(1));
-
-                        beer.priceBefore = Math.Round(price, 2, MidpointRounding.AwayFromZero);
-                        beer.priceAfter = beer.priceBefore;
-                    }
-                }
-
-                #endregion
-
-                #region parse discount
-
-                Elements discountHtml = beerHtml.SiblingElements.Select("input.HasWebDiscounts");
-                if (discountHtml.Any())
-                {
-                    string hasDiscount = discountHtml.First().Attr("value");
-                    beer.hasDiscount = hasDiscount.Equals("false") ? false : true;
-                }
-
-                if (beer.hasDiscount == true)
-                {
-                    Elements discountTypeHtml = beerHtml.SiblingElements.Select("input.WebDiscountType");
-                    if (discountTypeHtml.Any())
-                    {
-                        beer.discountType = discountTypeHtml.First().Attr("value");
+                                break;
+                            default:
+                                break;
+                        }
                     }
 
-                    Elements discountValueHtml = beerHtml.SiblingElements.Select("input.WebDiscountValue");
-                    if (discountValueHtml.Any())
+                    #endregion
+
+                    #region parse price
+
+                    string priceHtml = beerHtml.SiblingElements.Select("div.pricePerUnit").Text;
+                    if (!String.IsNullOrEmpty(priceHtml))
                     {
-                        string discountValue = discountValueHtml.First().Attr("value");
-                        beer.discountValue = Helper.ConvertPTNumberStrToDouble(discountValue);
+                        List<string> priceElems = priceHtml.Split(' ').ToList<string>();
+                        if (priceElems.Any() && priceElems.Count > 1)
+                        {
+                            double price = Helper.ConvertPTNumberStrToDouble(priceElems.ElementAt(1));
+
+                            beer.priceBefore = Math.Round(price, 2, MidpointRounding.AwayFromZero);
+                            beer.priceAfter = beer.priceBefore;
+                        }
                     }
-                }
 
-                #endregion
+                    #endregion
 
-                #region parse discount dates
+                    #region parse discount
 
-                Elements discountStartHtml = beerHtml.SiblingElements.Select("input.WebDiscountStartDate");
-                if (discountStartHtml.Any())
-                {
-                    string discountStart = discountStartHtml.First().Attr("value");
-                    beer.promoStart = DateTime.Parse(discountStart);
-                }
-
-                Elements discountEndHtml = beerHtml.SiblingElements.Select("input.WebDiscountEndDate");
-                if (discountEndHtml.Any())
-                {
-                    string discountEnd = discountEndHtml.First().Attr("value");
-                    beer.promoEnd = DateTime.Parse(discountEnd);
-                }
-
-                #endregion
-
-                #region parse price per litre
-
-                string priceLHtml = beerHtml.SiblingElements.Select("div.pricePerLitre").Text;
-                if (!String.IsNullOrEmpty(priceLHtml))
-                {
-                    List<string> priceLElems = priceLHtml.Split(' ').ToList<string>();
-                    if (priceLElems.Any() && priceLElems.Count > 1)
+                    Elements discountHtml = beerHtml.SiblingElements.Select("input.HasWebDiscounts");
+                    if (discountHtml.Any())
                     {
-                        beer.pricePerLitre = Helper.ConvertPTNumberStrToDouble(priceLElems.ElementAt(1));
+                        string hasDiscount = discountHtml.First().Attr("value");
+                        beer.hasDiscount = hasDiscount.Equals("false") ? false : true;
                     }
-                }
 
-                if (beer.hasDiscount == true && !String.IsNullOrEmpty(beer.discountType))
-                {
-                    if (beer.discountType.Equals("Value"))
+                    if (beer.hasDiscount == true)
                     {
-                        double newPrice = beer.priceBefore - beer.discountValue;
-                        double tCapacity = beer.total * beer.capacity;
-                        double newPriceL = newPrice / tCapacity;
+                        Elements discountTypeHtml = beerHtml.SiblingElements.Select("input.WebDiscountType");
+                        if (discountTypeHtml.Any())
+                        {
+                            beer.discountType = discountTypeHtml.First().Attr("value");
+                        }
 
-                        beer.pricePerLitre = Math.Round(newPriceL, 2, MidpointRounding.AwayFromZero);
-
-                        beer.priceAfter = Math.Round(newPrice, 2, MidpointRounding.AwayFromZero);
+                        Elements discountValueHtml = beerHtml.SiblingElements.Select("input.WebDiscountValue");
+                        if (discountValueHtml.Any())
+                        {
+                            string discountValue = discountValueHtml.First().Attr("value");
+                            beer.discountValue = Helper.ConvertPTNumberStrToDouble(discountValue);
+                        }
                     }
-                    else if (beer.discountType.Equals("Percentage"))
+
+                    #endregion
+
+                    #region parse discount dates
+
+                    Elements discountStartHtml = beerHtml.SiblingElements.Select("input.WebDiscountStartDate");
+                    if (discountStartHtml.Any())
                     {
-                        double newPrice = beer.priceBefore * beer.discountValue / 100;
-                        double tCapacity = beer.total * beer.capacity;
-                        double newPriceL = newPrice / tCapacity;
-
-                        beer.pricePerLitre = Math.Round(newPriceL, 2, MidpointRounding.AwayFromZero);
-
-                        beer.priceAfter = Math.Round(newPrice, 2, MidpointRounding.AwayFromZero);
+                        string discountStart = discountStartHtml.First().Attr("value");
+                        beer.promoStart = DateTime.Parse(discountStart);
                     }
+
+                    Elements discountEndHtml = beerHtml.SiblingElements.Select("input.WebDiscountEndDate");
+                    if (discountEndHtml.Any())
+                    {
+                        string discountEnd = discountEndHtml.First().Attr("value");
+                        beer.promoEnd = DateTime.Parse(discountEnd);
+                    }
+
+                    #endregion
+
+                    #region parse price per litre
+
+                    string priceLHtml = beerHtml.SiblingElements.Select("div.pricePerLitre").Text;
+                    if (!String.IsNullOrEmpty(priceLHtml))
+                    {
+                        List<string> priceLElems = priceLHtml.Split(' ').ToList<string>();
+                        if (priceLElems.Any() && priceLElems.Count > 1)
+                        {
+                            beer.pricePerLitre = Helper.ConvertPTNumberStrToDouble(priceLElems.ElementAt(1));
+                        }
+                    }
+
+                    if (beer.hasDiscount == true && !String.IsNullOrEmpty(beer.discountType))
+                    {
+                        if (beer.discountType.Equals("Value"))
+                        {
+                            double newPrice = beer.priceBefore - beer.discountValue;
+                            double tCapacity = beer.total * beer.capacity;
+                            double newPriceL = newPrice / tCapacity;
+
+                            beer.pricePerLitre = Math.Round(newPriceL, 2, MidpointRounding.AwayFromZero);
+
+                            beer.priceAfter = Math.Round(newPrice, 2, MidpointRounding.AwayFromZero);
+                        }
+                        else if (beer.discountType.Equals("Percentage"))
+                        {
+                            double newPrice = beer.priceBefore * beer.discountValue / 100;
+                            double tCapacity = beer.total * beer.capacity;
+                            double newPriceL = newPrice / tCapacity;
+
+                            beer.pricePerLitre = Math.Round(newPriceL, 2, MidpointRounding.AwayFromZero);
+
+                            beer.priceAfter = Math.Round(newPrice, 2, MidpointRounding.AwayFromZero);
+                        }
+                    }
+
+                    #endregion
+
+                    #region set beer urls
+
+                    if (beer.id != null)
+                    {
+                        beer.imageUrl = String.Format(URL_PRODUCT_IMAGE, beer.id);
+                        beer.detailsUrl = String.Format(URL_PRODUCT_DETAILS, beer.id);
+                    }
+
+                    #endregion
+
+                    _DbFromContinente.Add(beer);
                 }
-
-                #endregion
-
-                #region set beer urls
-
-                if (beer.id != null)
-                {
-                    beer.imageUrl = String.Format(URL_PRODUCT_IMAGE, beer.id);
-                    beer.detailsUrl = String.Format(URL_PRODUCT_DETAILS, beer.id);
-                }
-
-                #endregion
-
-                _DbFromContinente.Add(beer);
+            }
+            catch (Exception e)
+            {
+                return _DbFromContinente.OrderBy(x => x.pricePerLitre);
             }
 
-            //return _DbFromContinente.OrderBy(x => x.PricePerLitre);
-            return _DbFromContinente.AsQueryable();
+            return _DbFromContinente.OrderBy(x => x.pricePerLitre);
         }
     }
 }

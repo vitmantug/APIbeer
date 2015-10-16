@@ -25,10 +25,15 @@ namespace SBPriceCheckerOwinAPI.Controllers
         [EnableQueryAttribute]
         public async Task<IQueryable<Beer>> Get()
         {
-            Continente parser = new Continente();
-            return await parser.GetBeers();
+            List<Beer> allBeers = new List<Beer>();
 
-            //return _Db;
+            IEnumerable<Beer> beersContinente = await new Continente().GetBeers();
+            allBeers.AddRange(beersContinente);
+
+            IEnumerable<Beer> beersJumbo = await new Jumbo().GetBeers();
+            allBeers.AddRange(beersJumbo);
+            
+            return allBeers.AsQueryable();
         }
     }
 }

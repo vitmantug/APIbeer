@@ -55,6 +55,7 @@
     <Compile Include="Helpers\JsonContentNegotiator.cs" />
     <Compile Include="Models\Beer.cs" />
     <Compile Include="Parsers\Continente.cs" />
+    <Compile Include="Parsers\Jumbo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

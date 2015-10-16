@@ -21,6 +21,9 @@ namespace SBPriceCheckerCore.Helpers
             }
             else
             {
+                if (DECIMAL_SEPARATOR.Equals(","))
+                    strValue = strValue.Replace(".", ",");
+
                 return Convert.ToDouble(strValue);
             }
         }

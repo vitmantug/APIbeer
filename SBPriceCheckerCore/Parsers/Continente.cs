@@ -12,6 +12,7 @@ using NSoup.Select;
 using System.Net;
 using System.Globalization;
 using System.Threading;
+using System.IO;
 
 namespace SBPriceCheckerCore.Parsers
 {
@@ -238,8 +239,24 @@ namespace SBPriceCheckerCore.Parsers
                     _DbFromContinente.Add(beer);
                 }
             }
+            catch (WebException e)
+            {
+                using (WebResponse response = e.Response)
+                {
+                    HttpWebResponse httpResponse = (HttpWebResponse)response;
+                    Console.WriteLine("Error code: {0}", httpResponse.StatusCode);
+                    using (Stream data = response.GetResponseStream())
+                    using (var reader = new StreamReader(data))
+                    {
+                        string text = reader.ReadToEnd();
+                        Console.WriteLine(text);
+                    }
+                }
+                return _DbFromContinente.OrderBy(x => x.pricePerLitre);
+            }
             catch (Exception e)
             {
+                Console.WriteLine(e.Message);
                 return _DbFromContinente.OrderBy(x => x.pricePerLitre);
             }
 

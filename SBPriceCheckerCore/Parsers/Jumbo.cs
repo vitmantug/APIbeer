@@ -10,6 +10,7 @@ using NSoup.Nodes;
 using NSoup.Select;
 using SBPriceCheckerCore.Helpers;
 using SBPriceCheckerCore.Models;
+using System.IO;
 
 namespace SBPriceCheckerCore.Parsers
 {
@@ -37,6 +38,10 @@ namespace SBPriceCheckerCore.Parsers
                 webReq.UserAgent = "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.71 Safari/537.36";
                 webReq.Headers.Add("Accept-Encoding", "gzip, deflate, sdch");
                 webReq.Headers.Add("Accept-Language", "pt-PT,pt;q=0.8,en-US;q=0.6,en;q=0.4,es;q=0.2");
+                webReq.Headers.Add("Upgrade-Insecure-Requests", "1");
+
+                string detectSTS = DateTime.UtcNow.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'");
+                webReq.CookieContainer.Add(new Cookie("detectSTS", detectSTS) { Domain = webReq.Host }); //2015-10-16T13:51:13Z
                 #endregion
 
                 WebResponse response = await webReq.GetResponseAsync();
@@ -125,7 +130,7 @@ namespace SBPriceCheckerCore.Parsers
 
                     #region set beer urls
 
-                    if (beer.id != null)
+                    if (id > 0)
                     {
                         string idTxt = beer.id.ToString().PadLeft(8, '0');
 
@@ -138,8 +143,24 @@ namespace SBPriceCheckerCore.Parsers
                     _DbFromJumbo.Add(beer);
                 }
             }
+            catch (WebException e)
+            {
+                using (WebResponse response = e.Response)
+                {
+                    HttpWebResponse httpResponse = (HttpWebResponse)response;
+                    Console.WriteLine("Error code: {0}", httpResponse.StatusCode);
+                    using (Stream data = response.GetResponseStream())
+                    using (var reader = new StreamReader(data))
+                    {
+                        string text = reader.ReadToEnd();
+                        Console.WriteLine(text);
+                    }
+                }
+                return _DbFromJumbo.OrderBy(x => x.pricePerLitre);
+            }
             catch (Exception e)
             {
+                Console.WriteLine(e.Message);
                 return _DbFromJumbo.OrderBy(x => x.pricePerLitre);
             }
 

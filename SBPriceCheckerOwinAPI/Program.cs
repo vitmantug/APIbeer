@@ -20,12 +20,12 @@ namespace SBPriceCheckerOwinAPI
             WebApp.Start<Startup>(baseUri);
 
             Console.WriteLine("Server running at {0} - press Enter to quit. ", baseUri);
-            Console.ReadLine();
+            //Console.ReadLine();
 
-            //while (true)
-            //{
-            //    Thread.Sleep(50);
-            //}
+            while (true)
+            {
+                Thread.Sleep(50);
+            }
         }
     }
 }

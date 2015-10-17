@@ -55,12 +55,7 @@ namespace SBPriceCheckerCore.Parsers
 
                     #region parse id
 
-                    string value = beerHtml.Attr("p");
-                    int id = 0;
-                    if (int.TryParse(value, out id))
-                    {
-                        beer.id = id;
-                    }
+                    beer.id = beerHtml.Attr("p");
 
                     #endregion
 
@@ -130,9 +125,9 @@ namespace SBPriceCheckerCore.Parsers
 
                     #region set beer urls
 
-                    if (id > 0)
+                    if (!String.IsNullOrEmpty(beer.id))
                     {
-                        string idTxt = beer.id.ToString().PadLeft(8, '0');
+                        string idTxt = beer.id.PadLeft(8, '0');
 
                         beer.imageUrl = String.Format(URL_PRODUCT_IMAGE, idTxt);
                         beer.detailsUrl = String.Format(URL_PRODUCT_DETAILS, beer.id);

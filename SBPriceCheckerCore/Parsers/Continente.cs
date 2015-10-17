@@ -50,12 +50,7 @@ namespace SBPriceCheckerCore.Parsers
                             List<string> values = idValue.Split('(').ToList<string>();
                             if (values.Any())
                             {
-                                string value = values.ElementAt(0);
-                                int id = 0;
-                                if (int.TryParse(value, out id))
-                                {
-                                    beer.id = id;
-                                }
+                                beer.id = values.ElementAt(0);
                             }
                         }
                     }
@@ -166,6 +161,8 @@ namespace SBPriceCheckerCore.Parsers
                             string discountValue = discountValueHtml.First().Attr("value");
                             beer.discountValue = Helper.ConvertPTNumberStrToDouble(discountValue);
                         }
+
+                        beer.discountNote = beerHtml.SiblingElements.Select("span.iconDiscountText").First().Text() + beerHtml.SiblingElements.Select("span.discountValue").First().Text();
                     }
 
                     #endregion

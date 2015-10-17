@@ -8,7 +8,7 @@ namespace SBPriceCheckerCore.Models
 {
     public class Beer
     {
-        public int id { get; set; }
+        public string id { get; set; }
         public string name { get; set; }
         public int total { get; set; }
         public double capacity { get; set; }
@@ -18,6 +18,7 @@ namespace SBPriceCheckerCore.Models
         public bool hasDiscount { get; set; }
         public string discountType { get; set; }
         public double discountValue { get; set; }
+        public string discountNote { get; set; }
         public DateTime promoStart { get; set; }
         public DateTime promoEnd { get; set; }
         public string store { get; set; }

@@ -44,98 +44,100 @@ namespace SBPriceCheckerCore.Parsers
                 webReq.CookieContainer.Add(new Cookie("detectSTS", detectSTS) { Domain = webReq.Host }); //2015-10-16T13:51:13Z
                 #endregion
 
-                WebResponse response = await webReq.GetResponseAsync();
-                Document webpageHtml = NSoupClient.Parse(response.GetResponseStream(), "utf-8");
-                Elements beersHtml = webpageHtml.Body.SiblingElements.Select("div.produtoGrelha");
-
-                foreach (Element beerHtml in beersHtml)
+                using (WebResponse response = await webReq.GetResponseAsync())
                 {
-                    Beer beer = new Beer();
-                    beer.store = "Jumbo";
+                    Document webpageHtml = NSoupClient.Parse(response.GetResponseStream(), "utf-8");
+                    Elements beersHtml = webpageHtml.Body.SiblingElements.Select("div.produtoGrelha");
 
-                    #region parse id
-
-                    beer.id = beerHtml.Attr("p");
-
-                    #endregion
-
-                    #region parse name
-
-                    string name = beerHtml.GetElementsByClass("titProd").Text;
-                    beer.name = name;
-
-                    #endregion
-
-                    #region parse total and capacity
-
-                    string totalCapacity = beerHtml.GetElementsByClass("gr").Text.Replace("LT","").Replace("L","").Trim();
-                    if (!String.IsNullOrEmpty(totalCapacity))
+                    foreach (Element beerHtml in beersHtml)
                     {
-                        string total = string.Empty;
-                        string capacity = string.Empty;
+                        Beer beer = new Beer();
+                        beer.store = "Jumbo";
 
-                        List<string> totalCapacityElems = totalCapacity.Split('X').ToList<string>();
-                        int n = totalCapacityElems.Count;
+                        #region parse id
 
-                        switch (n)
+                        beer.id = beerHtml.Attr("p");
+
+                        #endregion
+
+                        #region parse name
+
+                        string name = beerHtml.GetElementsByClass("titProd").Text;
+                        beer.name = name;
+
+                        #endregion
+
+                        #region parse total and capacity
+
+                        string totalCapacity = beerHtml.GetElementsByClass("gr").Text.Replace("LT", "").Replace("L", "").Trim();
+                        if (!String.IsNullOrEmpty(totalCapacity))
                         {
-                            case 1:
-                                beer.total = 1;
+                            string total = string.Empty;
+                            string capacity = string.Empty;
 
-                                capacity = totalCapacityElems.ElementAt(0);
-                                beer.capacity = Helper.ConvertPTNumberStrToDouble(capacity);
-                                break;
+                            List<string> totalCapacityElems = totalCapacity.Split('X').ToList<string>();
+                            int n = totalCapacityElems.Count;
 
-                            case 2:
-                                total = totalCapacityElems.ElementAt(0);
-                                beer.total = Convert.ToInt32(total);
+                            switch (n)
+                            {
+                                case 1:
+                                    beer.total = 1;
 
-                                capacity = totalCapacityElems.ElementAt(1);
-                                beer.capacity = Helper.ConvertPTNumberStrToDouble(capacity);
-                                break;
+                                    capacity = totalCapacityElems.ElementAt(0);
+                                    beer.capacity = Helper.ConvertPTNumberStrToDouble(capacity);
+                                    break;
+
+                                case 2:
+                                    total = totalCapacityElems.ElementAt(0);
+                                    beer.total = Convert.ToInt32(total);
+
+                                    capacity = totalCapacityElems.ElementAt(1);
+                                    beer.capacity = Helper.ConvertPTNumberStrToDouble(capacity);
+                                    break;
+                            }
+
                         }
 
-                    }
+                        #endregion
 
-                    #endregion
+                        #region parse price
 
-                    #region parse price
-
-                    string priceHtml = beerHtml.GetElementsByClass("preco").Text.Trim();
-                    if (!String.IsNullOrEmpty(priceHtml))
-                    {
-                        List<string> priceElems = priceHtml.Split('€').ToList<string>();
-                        if (priceElems.Any())
+                        string priceHtml = beerHtml.GetElementsByClass("preco").Text.Trim();
+                        if (!String.IsNullOrEmpty(priceHtml))
                         {
-                            double price = Helper.ConvertPTNumberStrToDouble(priceElems.ElementAt(0));
+                            List<string> priceElems = priceHtml.Split('€').ToList<string>();
+                            if (priceElems.Any())
+                            {
+                                double price = Helper.ConvertPTNumberStrToDouble(priceElems.ElementAt(0));
 
-                            beer.priceBefore = Math.Round(price, 2, MidpointRounding.AwayFromZero);
-                            beer.priceAfter = beer.priceBefore;
+                                beer.priceBefore = Math.Round(price, 2, MidpointRounding.AwayFromZero);
+                                beer.priceAfter = beer.priceBefore;
+                            }
                         }
+
+                        #endregion
+
+                        #region parse price per litre
+
+                        double pricePerLitre = beer.priceBefore / (beer.total * beer.capacity);
+                        beer.pricePerLitre = Math.Round(pricePerLitre, 2, MidpointRounding.AwayFromZero);
+
+                        #endregion
+
+                        #region set beer urls
+
+                        if (!String.IsNullOrEmpty(beer.id))
+                        {
+                            string idTxt = beer.id.PadLeft(8, '0');
+
+                            beer.imageUrl = String.Format(URL_PRODUCT_IMAGE, idTxt);
+                            beer.detailsUrl = String.Format(URL_PRODUCT_DETAILS, beer.id);
+                        }
+
+                        #endregion
+
+                        _DbFromJumbo.Add(beer);
                     }
-
-                    #endregion
-
-                    #region parse price per litre
-
-                    double pricePerLitre = beer.priceBefore / (beer.total * beer.capacity);
-                    beer.pricePerLitre = Math.Round(pricePerLitre, 2, MidpointRounding.AwayFromZero); 
-
-                    #endregion
-
-                    #region set beer urls
-
-                    if (!String.IsNullOrEmpty(beer.id))
-                    {
-                        string idTxt = beer.id.PadLeft(8, '0');
-
-                        beer.imageUrl = String.Format(URL_PRODUCT_IMAGE, idTxt);
-                        beer.detailsUrl = String.Format(URL_PRODUCT_DETAILS, beer.id);
-                    }
-
-                    #endregion
-
-                    _DbFromJumbo.Add(beer);
                 }
             }
             catch (WebException e)

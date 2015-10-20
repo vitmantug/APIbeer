@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using SBPriceCheckerCore.Models;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -26,6 +29,53 @@ namespace SBPriceCheckerCore.Helpers
 
                 return Convert.ToDouble(strValue);
             }
+        }
+
+        private readonly string path_ = Path.GetTempPath();
+
+        public async Task InsertBeersRecordAsync(List<Beer> beersList, string store)
+        {
+            DateTime date = DateTime.Now;
+
+            string dateString = String.Format("{0:dd-MM-yyyy}", date);
+            string fileName = dateString + "_" + store + ".prices";
+
+            var filePath = Path.Combine(path_, fileName);
+
+            using (var stream = File.OpenWrite(filePath))
+            using (var writer = new StreamWriter(stream))
+                await writer.WriteAsync(JsonConvert.SerializeObject(beersList));
+        }
+
+        public bool PricesInCache(string store)
+        {
+            DateTime date = DateTime.Now;
+
+            string dateString = String.Format("{0:dd-MM-yyyy}", date);
+            string fileName = dateString + "_" + store + ".prices";
+
+            var filePath = Path.Combine(path_, fileName);
+
+            if (File.Exists(filePath))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public async Task<string> ReadBeersRecordAsync(string store)
+        {
+            DateTime date = DateTime.Now;
+
+            string dateString = String.Format("{0:dd-MM-yyyy}", date);
+            string fileName = dateString + "_" + store + ".prices";
+
+            var filePath = Path.Combine(path_, fileName);
+
+            using (var stream = File.OpenRead(filePath))
+            using (var reader = new StreamReader(stream))
+                return await reader.ReadToEndAsync();
         }
     }
 }

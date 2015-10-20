@@ -35,13 +35,13 @@ namespace SBPriceCheckerCore.Parsers
             {
                 if (Helper.PricesInCache(STORE))
                 {
-                    string dataJson = await Helper.ReadBeersRecordAsync(STORE);
+                    string dataJson = await Helper.ReadBeersRecordAsync(STORE).ConfigureAwait(false);
 
                     _DbFromContinente = JsonConvert.DeserializeObject<List<Beer>>(dataJson);
                 }
                 else
                 {
-                    Document webpageHtml = NSoupClient.Parse(await new WebClient().OpenReadTaskAsync(URL_SEARCH), "UTF-8");
+                    Document webpageHtml = NSoupClient.Parse(await new WebClient().OpenReadTaskAsync(URL_SEARCH).ConfigureAwait(false), "UTF-8");
 
                     Elements beersHtml = webpageHtml.Body.SiblingElements.Select("div.productBox");
 
@@ -248,7 +248,7 @@ namespace SBPriceCheckerCore.Parsers
                     }
 
                     if (_DbFromContinente.Any())
-                        await Helper.InsertBeersRecordAsync(_DbFromContinente, STORE);
+                        await Helper.InsertBeersRecordAsync(_DbFromContinente, STORE).ConfigureAwait(false);
                 }
             }
             catch (WebException e)

@@ -33,7 +33,7 @@ namespace SBPriceCheckerCore.Parsers
             {
                 if (Helper.PricesInCache(STORE))
                 {
-                    string dataJson = await Helper.ReadBeersRecordAsync(STORE);
+                    string dataJson = await Helper.ReadBeersRecordAsync(STORE).ConfigureAwait(false);
 
                     _DbFromJumbo = JsonConvert.DeserializeObject<List<Beer>>(dataJson);
                 }
@@ -55,7 +55,7 @@ namespace SBPriceCheckerCore.Parsers
                     webReq.CookieContainer.Add(new Cookie("detectSTS", detectSTS) { Domain = webReq.Host }); //2015-10-16T13:51:13Z
                     #endregion
 
-                    using (WebResponse response = await webReq.GetResponseAsync())
+                    using (WebResponse response = await webReq.GetResponseAsync().ConfigureAwait(false))
                     {
                         Document webpageHtml = NSoupClient.Parse(response.GetResponseStream(), "utf-8");
                         Elements beersHtml = webpageHtml.Body.SiblingElements.Select("div.produtoGrelha");
@@ -151,7 +151,7 @@ namespace SBPriceCheckerCore.Parsers
                         }
 
                         if (_DbFromJumbo.Any())
-                            await Helper.InsertBeersRecordAsync(_DbFromJumbo, STORE);
+                            await Helper.InsertBeersRecordAsync(_DbFromJumbo, STORE).ConfigureAwait(false);
                     }
                 }
             }

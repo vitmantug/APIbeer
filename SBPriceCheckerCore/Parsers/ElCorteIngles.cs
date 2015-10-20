@@ -34,7 +34,7 @@ namespace SBPriceCheckerCore.Parsers
             {
                 if (Helper.PricesInCache(STORE))
                 {
-                    string dataJson = await Helper.ReadBeersRecordAsync(STORE);
+                    string dataJson = await Helper.ReadBeersRecordAsync(STORE).ConfigureAwait(false);
 
                     _DbFromElCorteIngles = JsonConvert.DeserializeObject<List<Beer>>(dataJson);
                 }
@@ -51,7 +51,7 @@ namespace SBPriceCheckerCore.Parsers
                     webReq.Headers.Add("Accept-Language", "pt-PT,pt;q=0.8,en-US;q=0.6,en;q=0.4,es;q=0.2");
                     webReq.Headers.Add("Upgrade-Insecure-Requests", "1");
                     #endregion
-                    using (WebResponse response = await webReq.GetResponseAsync())
+                    using (WebResponse response = await webReq.GetResponseAsync().ConfigureAwait(false))
                     {
                         HttpWebRequest webReq2 = (HttpWebRequest)HttpWebRequest.Create(URL_SEARCH);
                         #region HttpWebRequest headers
@@ -64,7 +64,7 @@ namespace SBPriceCheckerCore.Parsers
                         webReq2.Headers.Add("Accept-Language", "pt-PT,pt;q=0.8,en-US;q=0.6,en;q=0.4,es;q=0.2");
                         webReq2.Headers.Add("Upgrade-Insecure-Requests", "1");
                         #endregion
-                        using (WebResponse response2 = await webReq2.GetResponseAsync())
+                        using (WebResponse response2 = await webReq2.GetResponseAsync().ConfigureAwait(false))
                         {
                             Document webpageHtml = NSoupClient.Parse(response2.GetResponseStream(), "utf-8");
                             Elements beersHtml = webpageHtml.Body.SiblingElements.Select("div.product-tile");
@@ -271,7 +271,7 @@ namespace SBPriceCheckerCore.Parsers
                             }
 
                             if (_DbFromElCorteIngles.Any())
-                                await Helper.InsertBeersRecordAsync(_DbFromElCorteIngles, STORE);
+                                await Helper.InsertBeersRecordAsync(_DbFromElCorteIngles, STORE).ConfigureAwait(false);
                         }
                     }
                 }

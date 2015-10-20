@@ -9,6 +9,8 @@ using System.Net.Http;
 using SBPriceCheckerCore.Models;
 using SBPriceCheckerCore.Parsers;
 using System.Web.OData;
+using SBPriceCheckerCore.Helpers;
+using Newtonsoft.Json;
 
 namespace SBPriceCheckerOwinAPI.Controllers
 {
@@ -22,21 +24,31 @@ namespace SBPriceCheckerOwinAPI.Controllers
                 new Beer { id = "3", name = "Cerveja com Álcool Pack Económico", total = 10, capacity = 0.25, priceBefore = 7.49, hasDiscount = true}
             };
 
+        private Helper Helper = new Helper();
+
         [EnableQueryAttribute]
         public async Task<IQueryable<Beer>> Get()
         {
-            List<Beer> allBeers = new List<Beer>();
+            List<Beer> _allBeers = new List<Beer>();
 
-            IEnumerable<Beer> beersContinente = await new Continente().GetBeers();
-            allBeers.AddRange(beersContinente);
+            if (Helper.PricesInCache("APIBeer"))
+            {
+                string dataJson = await Helper.ReadBeersRecordAsync("APIBeer").ConfigureAwait(false);
 
-            IEnumerable<Beer> beersJumbo = await new Jumbo().GetBeers();
-            allBeers.AddRange(beersJumbo);
+                _allBeers = JsonConvert.DeserializeObject<List<Beer>>(dataJson);
+            }
+            else
+            {
+                await Helper.StorePricesInCache();
+                if (Helper.PricesInCache("APIBeer"))
+                {
+                    string dataJson = await Helper.ReadBeersRecordAsync("APIBeer").ConfigureAwait(false);
 
-            IEnumerable<Beer> beersElCorteIngles = await new ElCorteIngles().GetBeers();
-            allBeers.AddRange(beersElCorteIngles);
-            
-            return allBeers.AsQueryable();
+                    _allBeers = JsonConvert.DeserializeObject<List<Beer>>(dataJson);
+                }
+            }
+
+            return _allBeers.AsQueryable();
         }
     }
 }

@@ -164,6 +164,9 @@ namespace SBPriceCheckerCore.Parsers
                                     if (unity.Equals("cl"))
                                     {
                                         beer.capacity = Helper.ConvertPTNumberStrToDouble("0," + capacity);
+
+                                        if(beer.capacity == 0.75)
+                                            beer.total = 1;
                                     }
                                     else if (unity.Equals("L"))
                                     {

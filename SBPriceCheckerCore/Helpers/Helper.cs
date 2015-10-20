@@ -73,7 +73,7 @@ namespace SBPriceCheckerCore.Helpers
 
             var filePath = Path.Combine(path_, fileName);
 
-            using (var stream = File.OpenRead(filePath))
+            using (var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             using (var reader = new StreamReader(stream))
                 return await reader.ReadToEndAsync();
         }

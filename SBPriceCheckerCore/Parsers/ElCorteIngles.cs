@@ -17,6 +17,8 @@ namespace SBPriceCheckerCore.Parsers
 {
     public class ElCorteIngles
     {
+        private static string STORE = "ElCorteIngles";
+
         private static string URL_PRODUCT_DETAILS = "http://www.elcorteingles.pt/supermercado/sm2/pt_PT/520142/supermarket/bebidas/aguas-sumos-e-cervejas/cervejas/cerveja/{0}";
 
         private static string URL_LOGIN = "http://www.elcorteingles.pt/supermercado/sm2/login/assignStore.jsp?shopsupermarket&centreId=520142&isPickup=true&shipMth=selfPickup&action=editPymeEditUser&extendData=&fromRegistry=true&externalIntranet=&virtualCenter=&deliveryCentre=&uid=1w4lxL05r9aFCUa31UCO1AVhXOZIhTLG7sMztNPxw-4=";
@@ -30,231 +32,243 @@ namespace SBPriceCheckerCore.Parsers
 
             try
             {
-                HttpWebRequest webReq = (HttpWebRequest)HttpWebRequest.Create(URL_LOGIN);
-                #region HttpWebRequest headers
-                webReq.CookieContainer = new CookieContainer();
-                webReq.Method = "GET";
-                webReq.Host = "www.elcorteingles.pt";
-                webReq.Accept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-                webReq.UserAgent = "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.71 Safari/537.36";
-                webReq.Headers.Add("Accept-Encoding", "gzip, deflate, sdch");
-                webReq.Headers.Add("Accept-Language", "pt-PT,pt;q=0.8,en-US;q=0.6,en;q=0.4,es;q=0.2");
-                webReq.Headers.Add("Upgrade-Insecure-Requests", "1");
-                #endregion
-                using (WebResponse response = await webReq.GetResponseAsync())
+                if (Helper.PricesInCache(STORE))
                 {
-                    HttpWebRequest webReq2 = (HttpWebRequest)HttpWebRequest.Create(URL_SEARCH);
+                    string dataJson = await Helper.ReadBeersRecordAsync(STORE);
+
+                    _DbFromElCorteIngles = JsonConvert.DeserializeObject<List<Beer>>(dataJson);
+                }
+                else
+                {
+                    HttpWebRequest webReq = (HttpWebRequest)HttpWebRequest.Create(URL_LOGIN);
                     #region HttpWebRequest headers
-                    webReq2.CookieContainer = webReq.CookieContainer;
-                    webReq2.Method = "GET";
-                    webReq2.Host = "www.elcorteingles.pt";
-                    webReq2.Accept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-                    webReq2.UserAgent = "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.71 Safari/537.36";
-                    webReq2.Headers.Add("Accept-Encoding", "gzip, deflate, sdch");
-                    webReq2.Headers.Add("Accept-Language", "pt-PT,pt;q=0.8,en-US;q=0.6,en;q=0.4,es;q=0.2");
-                    webReq2.Headers.Add("Upgrade-Insecure-Requests", "1");
+                    webReq.CookieContainer = new CookieContainer();
+                    webReq.Method = "GET";
+                    webReq.Host = "www.elcorteingles.pt";
+                    webReq.Accept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
+                    webReq.UserAgent = "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.71 Safari/537.36";
+                    webReq.Headers.Add("Accept-Encoding", "gzip, deflate, sdch");
+                    webReq.Headers.Add("Accept-Language", "pt-PT,pt;q=0.8,en-US;q=0.6,en;q=0.4,es;q=0.2");
+                    webReq.Headers.Add("Upgrade-Insecure-Requests", "1");
                     #endregion
-                    using (WebResponse response2 = await webReq2.GetResponseAsync())
+                    using (WebResponse response = await webReq.GetResponseAsync())
                     {
-                        Document webpageHtml = NSoupClient.Parse(response2.GetResponseStream(), "utf-8");
-                        Elements beersHtml = webpageHtml.Body.SiblingElements.Select("div.product-tile");
-
-                        foreach (Element beerHtml in beersHtml)
+                        HttpWebRequest webReq2 = (HttpWebRequest)HttpWebRequest.Create(URL_SEARCH);
+                        #region HttpWebRequest headers
+                        webReq2.CookieContainer = webReq.CookieContainer;
+                        webReq2.Method = "GET";
+                        webReq2.Host = "www.elcorteingles.pt";
+                        webReq2.Accept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
+                        webReq2.UserAgent = "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.71 Safari/537.36";
+                        webReq2.Headers.Add("Accept-Encoding", "gzip, deflate, sdch");
+                        webReq2.Headers.Add("Accept-Language", "pt-PT,pt;q=0.8,en-US;q=0.6,en;q=0.4,es;q=0.2");
+                        webReq2.Headers.Add("Upgrade-Insecure-Requests", "1");
+                        #endregion
+                        using (WebResponse response2 = await webReq2.GetResponseAsync())
                         {
-                            Beer beer = new Beer();
-                            beer.store = "ElCorteIngles";
+                            Document webpageHtml = NSoupClient.Parse(response2.GetResponseStream(), "utf-8");
+                            Elements beersHtml = webpageHtml.Body.SiblingElements.Select("div.product-tile");
 
-                            #region parse data-json
-
-                            //{\"id\":\"0105218600300315___\",\n\"name\":\"Super Bock Green Cerveja 33 cl\",\n\"brand\":\"Super Bock Green\",\n\"final_price\":\"0.97\",\n\"status\":\"Disponible\",\n\"currency\":\"EUR\"}
-                            string dataJson = beerHtml.Attr("data-json");
-
-                            dynamic objectJson = JsonConvert.DeserializeObject<dynamic>(dataJson);
-
-                            #endregion
-
-                            #region parse id
-
-                            beer.id = objectJson["id"];
-
-                            #endregion
-
-                            #region parse name
-
-                            beer.name = objectJson["name"];
-
-                            #endregion
-
-                            #region parse price
-
-                            string priceValue = objectJson["final_price"];
-
-                            if (!String.IsNullOrEmpty(priceValue))
+                            foreach (Element beerHtml in beersHtml)
                             {
-                                double price = Helper.ConvertPTNumberStrToDouble(priceValue);
+                                Beer beer = new Beer();
+                                beer.store = STORE;
 
-                                beer.priceBefore = Math.Round(price, 2, MidpointRounding.AwayFromZero);
-                                beer.priceAfter = beer.priceBefore;
-                            }
+                                #region parse data-json
 
-                            #endregion
+                                //{\"id\":\"0105218600300315___\",\n\"name\":\"Super Bock Green Cerveja 33 cl\",\n\"brand\":\"Super Bock Green\",\n\"final_price\":\"0.97\",\n\"status\":\"Disponible\",\n\"currency\":\"EUR\"}
+                                string dataJson = beerHtml.Attr("data-json");
 
-                            #region set beer urls
+                                dynamic objectJson = JsonConvert.DeserializeObject<dynamic>(dataJson);
 
-                            beer.imageUrl = beerHtml.GetElementsByClass("js-tile-image").Attr("data-image");
+                                #endregion
 
-                            if (!String.IsNullOrEmpty(beer.id))
-                            {
-                                beer.detailsUrl = String.Format(URL_PRODUCT_DETAILS, beer.id);
-                            }
+                                #region parse id
 
-                            #endregion
+                                beer.id = objectJson["id"];
 
-                            #region parse discount
+                                #endregion
 
-                            string promoTxt = objectJson["vendor_product_promotion"];
+                                #region parse name
 
-                            if (!String.IsNullOrEmpty(promoTxt))
-                            {
-                                beer.discountNote = promoTxt;
+                                beer.name = objectJson["name"];
 
-                                List<string> values = promoTxt.Split(' ').ToList<string>();
-                                foreach (string value in values)
+                                #endregion
+
+                                #region parse price
+
+                                string priceValue = objectJson["final_price"];
+
+                                if (!String.IsNullOrEmpty(priceValue))
                                 {
-                                    if (value.Contains("%"))
+                                    double price = Helper.ConvertPTNumberStrToDouble(priceValue);
+
+                                    beer.priceBefore = Math.Round(price, 2, MidpointRounding.AwayFromZero);
+                                    beer.priceAfter = beer.priceBefore;
+                                }
+
+                                #endregion
+
+                                #region set beer urls
+
+                                beer.imageUrl = beerHtml.GetElementsByClass("js-tile-image").Attr("data-image");
+
+                                if (!String.IsNullOrEmpty(beer.id))
+                                {
+                                    beer.detailsUrl = String.Format(URL_PRODUCT_DETAILS, beer.id);
+                                }
+
+                                #endregion
+
+                                #region parse discount
+
+                                string promoTxt = objectJson["vendor_product_promotion"];
+
+                                if (!String.IsNullOrEmpty(promoTxt))
+                                {
+                                    beer.discountNote = promoTxt;
+
+                                    List<string> values = promoTxt.Split(' ').ToList<string>();
+                                    foreach (string value in values)
                                     {
-                                        beer.hasDiscount = true;
-                                        beer.discountType = "Percentage";
+                                        if (value.Contains("%"))
+                                        {
+                                            beer.hasDiscount = true;
+                                            beer.discountType = "Percentage";
 
-                                        string val = value.Replace("%", "");
+                                            string val = value.Replace("%", "");
 
-                                        beer.discountValue = Helper.ConvertPTNumberStrToDouble(val);
+                                            beer.discountValue = Helper.ConvertPTNumberStrToDouble(val);
+                                        }
                                     }
                                 }
-                            }
 
-                            #endregion
+                                #endregion
 
-                            #region parse total and capacity
+                                #region parse total and capacity
 
-                            if (!String.IsNullOrEmpty(beer.name))
-                            {
-                                string total = string.Empty;
-                                string capacity = string.Empty;
-                                string unity = string.Empty;
-
-                                List<string> toRemove = new List<string>() { "garrafa", "embalagem", "Pack" };
-
-                                List<string> totalCapacityElems = beer.name.Split(' ').ToList<string>(); //Super Bock Stout Cerveja Nacional Preta Pack 6 garrafa 33 cl
-                                int n = totalCapacityElems.Count;
-
-                                unity = totalCapacityElems.ElementAt(n - 1);
-                                capacity = totalCapacityElems.ElementAt(n - 2);
-
-                                if (unity.Equals("cl"))
+                                if (!String.IsNullOrEmpty(beer.name))
                                 {
-                                    beer.capacity = Helper.ConvertPTNumberStrToDouble("0," + capacity);
-                                }
-                                else if (unity.Equals("L"))
-                                {
-                                    beer.total = 1;
-                                    beer.capacity = Helper.ConvertPTNumberStrToDouble(capacity);
-                                }
+                                    string total = string.Empty;
+                                    string capacity = string.Empty;
+                                    string unity = string.Empty;
 
-                                //Remove unity and capacity
-                                totalCapacityElems.RemoveRange(n - 2, 2);
-                                n = totalCapacityElems.Count;
+                                    List<string> toRemove = new List<string>() { "garrafa", "embalagem", "Pack" };
 
-                                //Parse total
-                                total = totalCapacityElems.ElementAt(n - 1);
+                                    List<string> totalCapacityElems = beer.name.Split(' ').ToList<string>(); //Super Bock Stout Cerveja Nacional Preta Pack 6 garrafa 33 cl
+                                    int n = totalCapacityElems.Count;
 
-                                int totalValue = 0;
-                                if (int.TryParse(total, out totalValue))
-                                {
-                                    beer.total = totalValue;
+                                    unity = totalCapacityElems.ElementAt(n - 1);
+                                    capacity = totalCapacityElems.ElementAt(n - 2);
 
-                                    totalCapacityElems.RemoveAt(n - 1);
-                                    n = totalCapacityElems.Count;
-                                }
-                                else
-                                {
-                                    if (total.Equals("Cerveja"))
+                                    if (unity.Equals("cl"))
+                                    {
+                                        beer.capacity = Helper.ConvertPTNumberStrToDouble("0," + capacity);
+                                    }
+                                    else if (unity.Equals("L"))
                                     {
                                         beer.total = 1;
+                                        beer.capacity = Helper.ConvertPTNumberStrToDouble(capacity);
+                                    }
+
+                                    //Remove unity and capacity
+                                    totalCapacityElems.RemoveRange(n - 2, 2);
+                                    n = totalCapacityElems.Count;
+
+                                    //Parse total
+                                    total = totalCapacityElems.ElementAt(n - 1);
+
+                                    int totalValue = 0;
+                                    if (int.TryParse(total, out totalValue))
+                                    {
+                                        beer.total = totalValue;
 
                                         totalCapacityElems.RemoveAt(n - 1);
                                         n = totalCapacityElems.Count;
                                     }
-                                    else if (total.Equals("Branca"))
+                                    else
                                     {
-                                        beer.total = 1;
+                                        if (total.Equals("Cerveja"))
+                                        {
+                                            beer.total = 1;
+
+                                            totalCapacityElems.RemoveAt(n - 1);
+                                            n = totalCapacityElems.Count;
+                                        }
+                                        else if (total.Equals("Branca"))
+                                        {
+                                            beer.total = 1;
+                                        }
                                     }
-                                }
 
-                                //Reassemble name
-                                beer.name = "";
-                                foreach (string name in totalCapacityElems)
-                                {
-                                    beer.name += name + " ";
-                                }
-                                beer.name.Trim();
-
-                                List<string> totalElems = beer.name.Split(new string[] { "Leve" }, StringSplitOptions.None).ToList<string>();
-                                if (totalElems.Any() && totalElems.Count == 2)
-                                {
-                                    beer.name = totalElems.ElementAt(0).Trim();
-
-                                    string tVal = totalElems.ElementAt(1).Trim().Split(' ').ToList<string>().ElementAt(0);
-                                    beer.total = Convert.ToInt32(tVal);
-                                }
-                                else if (totalElems.Any() && totalElems.Count == 1)
-                                {
-                                    List<string> totalElemsPack = beer.name.Split(new string[] { "Pack " }, StringSplitOptions.RemoveEmptyEntries).ToList<string>();
-                                    if (totalElemsPack.Any() && totalElemsPack.Count == 2)
+                                    //Reassemble name
+                                    beer.name = "";
+                                    foreach (string name in totalCapacityElems)
                                     {
-                                        beer.name = totalElemsPack.ElementAt(0).Trim();
+                                        beer.name += name + " ";
+                                    }
+                                    beer.name.Trim();
 
-                                        string tVal = totalElemsPack.ElementAt(1).Trim().Split(' ').ToList<string>().ElementAt(0);
+                                    List<string> totalElems = beer.name.Split(new string[] { "Leve" }, StringSplitOptions.None).ToList<string>();
+                                    if (totalElems.Any() && totalElems.Count == 2)
+                                    {
+                                        beer.name = totalElems.ElementAt(0).Trim();
+
+                                        string tVal = totalElems.ElementAt(1).Trim().Split(' ').ToList<string>().ElementAt(0);
                                         beer.total = Convert.ToInt32(tVal);
                                     }
-                                    else if (totalElemsPack.Any() && totalElemsPack.Count == 1)
+                                    else if (totalElems.Any() && totalElems.Count == 1)
                                     {
-                                        beer.name = totalElemsPack.ElementAt(0).Trim();
+                                        List<string> totalElemsPack = beer.name.Split(new string[] { "Pack " }, StringSplitOptions.RemoveEmptyEntries).ToList<string>();
+                                        if (totalElemsPack.Any() && totalElemsPack.Count == 2)
+                                        {
+                                            beer.name = totalElemsPack.ElementAt(0).Trim();
+
+                                            string tVal = totalElemsPack.ElementAt(1).Trim().Split(' ').ToList<string>().ElementAt(0);
+                                            beer.total = Convert.ToInt32(tVal);
+                                        }
+                                        else if (totalElemsPack.Any() && totalElemsPack.Count == 1)
+                                        {
+                                            beer.name = totalElemsPack.ElementAt(0).Trim();
+                                        }
+                                    }
+
+                                    foreach (string strToRem in toRemove)
+                                    {
+                                        beer.name = beer.name.Replace(strToRem, "").Trim();
                                     }
                                 }
 
-                                foreach (string strToRem in toRemove)
+                                #endregion
+
+                                #region parse price per litre
+
+                                if (beer.hasDiscount == true && !String.IsNullOrEmpty(beer.discountType))
                                 {
-                                    beer.name = beer.name.Replace(strToRem, "").Trim();
+                                    if (beer.discountType.Equals("Percentage"))
+                                    {
+                                        double newPrice = beer.priceBefore * beer.discountValue / 100;
+                                        beer.priceAfter = Math.Round(newPrice, 2, MidpointRounding.AwayFromZero);
+
+                                        double tCapacity = beer.total * beer.capacity;
+                                        double newPriceL = newPrice / tCapacity;
+                                        beer.pricePerLitre = Math.Round(newPriceL, 2, MidpointRounding.AwayFromZero);
+                                    }
                                 }
-                            }
-
-                            #endregion
-
-                            #region parse price per litre
-
-                            if (beer.hasDiscount == true && !String.IsNullOrEmpty(beer.discountType))
-                            {
-                                if (beer.discountType.Equals("Percentage"))
+                                else
                                 {
-                                    double newPrice = beer.priceBefore * beer.discountValue / 100;
-                                    beer.priceAfter = Math.Round(newPrice, 2, MidpointRounding.AwayFromZero);
-
                                     double tCapacity = beer.total * beer.capacity;
-                                    double newPriceL = newPrice / tCapacity;
-                                    beer.pricePerLitre = Math.Round(newPriceL, 2, MidpointRounding.AwayFromZero);
+                                    double priceL = beer.priceAfter / tCapacity;
+                                    beer.pricePerLitre = Math.Round(priceL, 2, MidpointRounding.AwayFromZero);
                                 }
-                            }
-                            else
-                            {
-                                double tCapacity = beer.total * beer.capacity;
-                                double priceL = beer.priceAfter / tCapacity;
-                                beer.pricePerLitre = Math.Round(priceL, 2, MidpointRounding.AwayFromZero);
+
+                                #endregion
+
+                                _DbFromElCorteIngles.Add(beer);
                             }
 
-                            #endregion
-
-                            _DbFromElCorteIngles.Add(beer);
+                            if (_DbFromElCorteIngles.Any())
+                                await Helper.InsertBeersRecordAsync(_DbFromElCorteIngles, STORE);
                         }
                     }
                 }

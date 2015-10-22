@@ -83,14 +83,17 @@ namespace SBPriceCheckerCore.Helpers
         {
             List<Beer> _allBeers = new List<Beer>();
 
-            IEnumerable<Beer> beersContinente = await new Continente().GetBeers();
-            _allBeers.AddRange(beersContinente);
+            //IEnumerable<Beer> beersContinente = await new Continente().GetBeers();
+            //_allBeers.AddRange(beersContinente);
 
-            IEnumerable<Beer> beersJumbo = await new Jumbo().GetBeers();
-            _allBeers.AddRange(beersJumbo);
+            //IEnumerable<Beer> beersJumbo = await new Jumbo().GetBeers();
+            //_allBeers.AddRange(beersJumbo);
 
-            IEnumerable<Beer> beersElCorteIngles = await new ElCorteIngles().GetBeers();
-            _allBeers.AddRange(beersElCorteIngles);
+            //IEnumerable<Beer> beersElCorteIngles = await new ElCorteIngles().GetBeers();
+            //_allBeers.AddRange(beersElCorteIngles);
+
+            IEnumerable<Beer> beersIntermarche = await new Intermarche().GetBeers();
+            _allBeers.AddRange(beersIntermarche);
 
             if (_allBeers.Any())
                 await InsertBeersRecordAsync(_allBeers, "APIBeer").ConfigureAwait(false);

@@ -24,7 +24,7 @@ namespace SBPriceCheckerCore.Parsers
 
         private static string STORE = "Intermarche";
 
-        private static string URL_PRODUCT_DETAILS = "http://www.elcorteingles.pt/supermercado/sm2/pt_PT/520142/supermarket/bebidas/aguas-sumos-e-cervejas/cervejas/cerveja/{0}";
+        private static string URL_PRODUCT_IMAGE = "https://lojaonline.intermarche.pt{0}";
 
         private static string URL_LOGIN = "https://lojaonline.intermarche.pt/Accueil.aspx?p=16";
         private static string URL_SEARCH = "https://lojaonline.intermarche.pt/Catalogue/RechercheProduits.aspx?mot=super%20bock";
@@ -37,6 +37,8 @@ namespace SBPriceCheckerCore.Parsers
         {
             try
             {
+                _DbFromIntermarche = new List<Beer>();
+
                 if (Helper.PricesInCache(STORE))
                 {
                     string dataJson = await Helper.ReadBeersRecordAsync(STORE).ConfigureAwait(false);
@@ -152,6 +154,185 @@ namespace SBPriceCheckerCore.Parsers
                                 #region parse id
 
                                 beer.id = beerHtml.Attr("data-id");
+
+                                #endregion
+
+                                #region parse name
+
+                                beer.name = beerHtml.GetElementsByClass("p_libelle").First().Text();
+
+                                #endregion
+
+                                #region parse detailsIUrl
+
+                                beer.detailsUrl = ""; //Supermarket does not have a specific page for the products, only a pop-up
+
+                                #endregion
+
+                                #region parse price
+
+                                string priceHtml = beerHtml.GetElementsByClass("prixDec").First().Attr("value");
+                                if (!String.IsNullOrEmpty(priceHtml))
+                                {
+                                    double price = Helper.ConvertPTNumberStrToDouble(priceHtml);
+
+                                    beer.priceBefore = Math.Round(price, 2, MidpointRounding.AwayFromZero);
+                                    beer.priceAfter = beer.priceBefore;
+                                }
+
+                                #endregion
+
+                                #region parse hasDiscount
+
+                                beer.discountNote = string.Empty;
+
+                                string hasDiscount = beerHtml.GetElementsByClass("zone_promo").First().Attr("style");
+                                if (!String.IsNullOrEmpty(hasDiscount))
+                                {
+                                    if (hasDiscount.Contains("block"))
+                                        beer.hasDiscount = true;
+                                    else
+                                        beer.hasDiscount = false;
+                                }
+
+                                #endregion
+
+                                #region parse discount dates
+
+                                if (beer.hasDiscount)
+                                {
+                                    Elements discountStartHtml = beerHtml.GetElementsByClass("date_debut_promo");
+                                    if (discountStartHtml.Any())
+                                    {
+                                        string discountStart = discountStartHtml.First().Text();
+                                        beer.promoStart = DateTime.Parse(discountStart);
+                                    }
+
+                                    Elements discountEndHtml = beerHtml.GetElementsByClass("date_fin_promo");
+                                    if (discountEndHtml.Any())
+                                    {
+                                        string discountEnd = discountEndHtml.First().Text();
+                                        beer.promoEnd = DateTime.Parse(discountEnd);
+                                    }
+                                }
+
+                                #endregion
+
+                                #region parse imageUrl
+
+                                Elements imageUrlHtml = beerHtml.GetElementsByClass("vignettePrincipale");
+                                if (imageUrlHtml.Any())
+                                {
+                                    string imageUrl = imageUrlHtml.First().Attr("src");
+                                    beer.imageUrl = String.Format(URL_PRODUCT_IMAGE, imageUrl);
+                                }
+
+                                #endregion
+
+                                #region parse total and capacity
+
+                                Elements totalCapacityHtml = beerHtml.GetElementsByClass("p_conditionnement");
+                                if (totalCapacityHtml.Any())
+                                {
+                                    string totalCapacity = totalCapacityHtml.First().Text();
+                                    if (!String.IsNullOrEmpty(totalCapacity))
+                                    {
+                                        List<string> totalCapacityValues = totalCapacity.Split(' ').ToList<string>();
+                                        if (totalCapacityValues.Any())
+                                        {
+                                            int count = totalCapacityValues.Count;
+                                            string last = totalCapacityValues.ElementAt(count - 1);
+                                            string pen = totalCapacityValues.ElementAt(count - 2);
+
+                                            if (last.Equals("l") || last.Equals("lt"))
+                                            {
+                                                if (pen.Contains("x"))
+                                                {
+                                                    List<string> tc = pen.Split('x').ToList<string>();
+                                                    beer.total = Convert.ToInt32(tc.ElementAt(0));
+
+                                                    beer.capacity = Helper.ConvertPTNumberStrToDouble(tc.ElementAt(1));
+                                                }
+                                                else
+                                                {
+                                                    beer.total = 1;
+                                                    beer.capacity = Helper.ConvertPTNumberStrToDouble(pen);
+                                                }
+                                            }
+                                            else if (last.Equals("cl"))
+                                            {
+                                                if (pen.Contains("x"))
+                                                {
+                                                    List<string> tc = pen.Split('x').ToList<string>();
+                                                    beer.total = Convert.ToInt32(tc.ElementAt(0));
+
+                                                    beer.capacity = Helper.ConvertPTNumberStrToDouble("0," + tc.ElementAt(1));
+                                                }
+                                                else
+                                                {
+                                                    beer.total = 1;
+                                                    beer.capacity = Helper.ConvertPTNumberStrToDouble("0," + pen);
+                                                }
+                                            }
+                                            else if (last.Contains("x"))
+                                            {
+                                                if (last.Contains("l") || last.Contains("lt"))
+                                                {
+                                                    last = last.Replace("l", "").Replace("lt", "");
+
+                                                    List<string> tc = last.Split('x').ToList<string>();
+                                                    beer.total = Convert.ToInt32(tc.ElementAt(0));
+
+                                                    beer.capacity = Helper.ConvertPTNumberStrToDouble(tc.ElementAt(1));
+                                                }
+                                                else if (last.Contains("cl"))
+                                                {
+                                                    last = last.Replace("cl", "");
+
+                                                    List<string> tc = last.Split('x').ToList<string>();
+                                                    beer.total = Convert.ToInt32(tc.ElementAt(0));
+
+                                                    beer.capacity = Helper.ConvertPTNumberStrToDouble("0," + tc.ElementAt(1));
+                                                }
+                                            }
+                                            else if (last.Contains("cl"))
+                                            {
+                                                last = last.Replace("cl", "");
+
+                                                beer.total = 1;
+                                                beer.capacity = Helper.ConvertPTNumberStrToDouble("0," + last);
+                                            }
+                                            else if (last.Contains("l") || last.Contains("lt"))
+                                            {
+                                                last = last.Replace("l", "").Replace("lt", "");
+
+                                                beer.total = 1;
+                                                beer.capacity = Helper.ConvertPTNumberStrToDouble(last);
+                                            }
+                                        }
+                                    }
+                                }
+
+                                #endregion
+
+                                #region calculate price per litre
+
+                                if (beer.total > 0 && beer.capacity > 0)
+                                {
+                                    double tCapacity = beer.total * beer.capacity;
+                                    double newPriceL = beer.priceBefore / tCapacity;
+
+                                    beer.pricePerLitre = Math.Round(newPriceL, 2, MidpointRounding.AwayFromZero);
+                                }
+
+                                #endregion
+
+                                #region calculte price per unity
+
+                                if (beer.priceAfter > 0 && beer.total > 0)
+                                {
+                                    beer.priceUnity = Math.Round(beer.priceAfter / beer.total, 2, MidpointRounding.AwayFromZero);
+                                }
 
                                 #endregion
 

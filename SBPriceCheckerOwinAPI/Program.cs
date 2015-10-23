@@ -27,7 +27,8 @@ namespace SBPriceCheckerOwinAPI
             aTimer.Enabled = true;
 
             Helper Helper = new Helper();
-            Helper.StorePricesInCache().ConfigureAwait(false);
+            if (!Helper.PricesInCache("APIBeer"))
+                Helper.StorePricesInCache().ConfigureAwait(false);
 
             Console.WriteLine("Server running at {0} - press Enter to quit. ", baseUri);
             //Console.ReadLine();
@@ -41,7 +42,9 @@ namespace SBPriceCheckerOwinAPI
         private static async Task OnTimedEvent(object source, ElapsedEventArgs e)
         {
             Helper Helper = new Helper();
-            await Helper.StorePricesInCache().ConfigureAwait(false);
+
+            if(!Helper.PricesInCache("APIBeer"))
+                await Helper.StorePricesInCache().ConfigureAwait(false);
         }
     }
 

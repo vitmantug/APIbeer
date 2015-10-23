@@ -15,6 +15,7 @@ namespace SBPriceCheckerCore.Models
         public double priceBefore { get; set; }
         public double priceAfter { get; set; }
         public double pricePerLitre { get; set; }
+        public double priceUnity { get; set; }
         public bool hasDiscount { get; set; }
         public string discountType { get; set; }
         public double discountValue { get; set; }

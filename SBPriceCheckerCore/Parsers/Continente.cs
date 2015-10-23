@@ -224,7 +224,7 @@ namespace SBPriceCheckerCore.Parsers
                             }
                             else if (beer.discountType.Equals("Percentage"))
                             {
-                                double newPrice = beer.priceBefore * beer.discountValue / 100;
+                                double newPrice = beer.priceBefore - (beer.priceBefore * beer.discountValue / 100);
                                 double tCapacity = beer.total * beer.capacity;
                                 double newPriceL = newPrice / tCapacity;
 

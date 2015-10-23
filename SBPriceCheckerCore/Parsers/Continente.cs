@@ -151,6 +151,8 @@ namespace SBPriceCheckerCore.Parsers
 
                         #region parse discount
 
+                        beer.discountNote = string.Empty;
+
                         Elements discountHtml = beerHtml.SiblingElements.Select("input.HasWebDiscounts");
                         if (discountHtml.Any())
                         {
@@ -240,6 +242,15 @@ namespace SBPriceCheckerCore.Parsers
                         {
                             beer.imageUrl = String.Format(URL_PRODUCT_IMAGE, beer.id);
                             beer.detailsUrl = String.Format(URL_PRODUCT_DETAILS, beer.id);
+                        }
+
+                        #endregion
+
+                        #region calculte price per unity
+
+                        if (beer.priceAfter > 0 && beer.total > 0)
+                        {
+                            beer.priceUnity = Math.Round(beer.priceAfter / beer.total, 2, MidpointRounding.AwayFromZero);
                         }
 
                         #endregion

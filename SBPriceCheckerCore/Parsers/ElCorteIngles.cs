@@ -122,6 +122,8 @@ namespace SBPriceCheckerCore.Parsers
 
                                 #region parse discount
 
+                                beer.discountNote = string.Empty;
+
                                 string promoTxt = objectJson["vendor_product_promotion"];
 
                                 if (!String.IsNullOrEmpty(promoTxt))
@@ -263,6 +265,15 @@ namespace SBPriceCheckerCore.Parsers
                                     double tCapacity = beer.total * beer.capacity;
                                     double priceL = beer.priceAfter / tCapacity;
                                     beer.pricePerLitre = Math.Round(priceL, 2, MidpointRounding.AwayFromZero);
+                                }
+
+                                #endregion
+
+                                #region calculte price per unity
+
+                                if (beer.priceAfter > 0 && beer.total > 0)
+                                {
+                                    beer.priceUnity = Math.Round(beer.priceAfter / beer.total, 2, MidpointRounding.AwayFromZero);
                                 }
 
                                 #endregion

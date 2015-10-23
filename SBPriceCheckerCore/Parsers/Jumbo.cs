@@ -147,6 +147,17 @@ namespace SBPriceCheckerCore.Parsers
 
                             #endregion
 
+                            #region calculte price per unity
+
+                            if (beer.priceAfter > 0 && beer.total > 0)
+                            {
+                                beer.priceUnity = Math.Round(beer.priceAfter / beer.total, 2, MidpointRounding.AwayFromZero);
+                            }
+
+                            #endregion
+
+                            beer.discountNote = string.Empty;
+
                             _DbFromJumbo.Add(beer);
                         }
 

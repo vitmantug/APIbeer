@@ -57,6 +57,7 @@
     <Compile Include="Models\Beer.cs" />
     <Compile Include="Parsers\Continente.cs" />
     <Compile Include="Parsers\ElCorteIngles.cs" />
+    <Compile Include="Parsers\Froiz.cs" />
     <Compile Include="Parsers\Intermarche.cs" />
     <Compile Include="Parsers\Jumbo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

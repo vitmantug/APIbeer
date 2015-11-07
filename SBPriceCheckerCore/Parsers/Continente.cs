@@ -70,14 +70,14 @@ namespace SBPriceCheckerCore.Parsers
 
                         #region parse name
 
-                        string name = beerHtml.SiblingElements.Select("div.productTitle").Text;
+                        string name = beerHtml.SiblingElements.Select("div.containerDescription").Select("div.title").Text;
                         beer.name = name;
 
                         #endregion
 
                         #region parse total and capacity
 
-                        string totalCapacity = beerHtml.SiblingElements.Select("div.productSubtitle").Text;
+                        string totalCapacity = beerHtml.SiblingElements.Select("div.subTitle").Text;
                         if (!String.IsNullOrEmpty(totalCapacity))
                         {
                             string total = string.Empty;
@@ -134,7 +134,7 @@ namespace SBPriceCheckerCore.Parsers
 
                         #region parse price
 
-                        string priceHtml = beerHtml.SiblingElements.Select("div.pricePerUnit").Text;
+                        string priceHtml = beerHtml.SiblingElements.Select("div.priceFirstRow").Text;
                         if (!String.IsNullOrEmpty(priceHtml))
                         {
                             List<string> priceElems = priceHtml.Split(' ').ToList<string>();
@@ -200,7 +200,7 @@ namespace SBPriceCheckerCore.Parsers
 
                         #region parse price per litre
 
-                        string priceLHtml = beerHtml.SiblingElements.Select("div.pricePerLitre").Text;
+                        string priceLHtml = beerHtml.SiblingElements.Select("div.priceSecondRow").Text;
                         if (!String.IsNullOrEmpty(priceLHtml))
                         {
                             List<string> priceLElems = priceLHtml.Split(' ').ToList<string>();

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SBPriceCheckerOwinAPI", "SBPriceCheckerOwinAPI\SBPriceCheckerOwinAPI.csproj", "{713BB232-391E-4A2B-844F-C0ACE364B4D3}"
 EndProject
@@ -17,6 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{16E089
 		.nuget\NuGet.exe = .nuget\NuGet.exe
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SBPriceCheckerMvcAPI", "SBPriceCheckerMvcAPI\SBPriceCheckerMvcAPI.csproj", "{0A7407FE-8A82-4726-B609-ACDC15A83480}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -40,6 +42,10 @@ Global
 		{D504F207-998E-41FE-B8F3-3EB6EED39DC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D504F207-998E-41FE-B8F3-3EB6EED39DC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D504F207-998E-41FE-B8F3-3EB6EED39DC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A7407FE-8A82-4726-B609-ACDC15A83480}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A7407FE-8A82-4726-B609-ACDC15A83480}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A7407FE-8A82-4726-B609-ACDC15A83480}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A7407FE-8A82-4726-B609-ACDC15A83480}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
